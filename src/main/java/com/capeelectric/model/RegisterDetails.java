@@ -1,5 +1,7 @@
 package com.capeelectric.model;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +15,7 @@ import javax.persistence.Table;
 public class RegisterDetails {
    @Id
    @Column(name=" REGISTER_ID")
+   @GeneratedValue(strategy = GenerationType.AUTO)
    private Integer registerid;
    
    @Column(name="EMP_ID")
@@ -22,7 +25,7 @@ public class RegisterDetails {
    private String name;
    
    @Column(name="DOB")
-   private Integer dob;
+   private Date dob;
    
    @Column(name="GENDER")
    private String gender;
@@ -31,10 +34,10 @@ public class RegisterDetails {
    private String maritalstatus;
    
    @Column(name="MOBILE_NUMBER")
-   private Integer mobilenumber;
+   private String mobilenumber;
    
    @Column(name="ALTERNATE_NUMBER")
-   private Integer alternatenumber;
+   private String alternatenumber;
    
    @Column(name="EMAIL_ID")
    private String emailid;
@@ -43,7 +46,7 @@ public class RegisterDetails {
    private String password;
    
    @Column(name="DATE_OF_JOINING")
-   private Integer dateofjoining;
+   private Date dateofjoining;
    
    @Column(name="DEPARTMENT ")
    private String department;
@@ -56,6 +59,18 @@ public class RegisterDetails {
    
    @Column(name="OFFICE_LOCATION")
    private String officelocation;
+   
+   @Column(name="CREATED_DATE")
+   private Integer createddate;
+   
+   @Column(name="CREATED_BY")
+   private String createdby;
+   
+   @Column(name="UPDATED_DATE")
+   private Integer updateddate;
+   
+   @Column(name="UPDATED_BY")
+   private String updatedby;
    
    @Column(name="STATUS")
    private String status;
@@ -84,11 +99,11 @@ public void setName(String name) {
 	this.name = name;
 }
 
-public Integer getDob() {
+public Date getDob() {
 	return dob;
 }
 
-public void setDob(Integer dob) {
+public void setDob(Date dob) {
 	this.dob = dob;
 }
 
@@ -108,19 +123,21 @@ public void setMaritalstatus(String maritalstatus) {
 	this.maritalstatus = maritalstatus;
 }
 
-public Integer getMobilenumber() {
+
+
+public String getMobilenumber() {
 	return mobilenumber;
 }
 
-public void setMobilenumber(Integer mobilenumber) {
+public void setMobilenumber(String mobilenumber) {
 	this.mobilenumber = mobilenumber;
 }
 
-public Integer getAlternatenumber() {
+public String getAlternatenumber() {
 	return alternatenumber;
 }
 
-public void setAlternatenumber(Integer alternatenumber) {
+public void setAlternatenumber(String alternatenumber) {
 	this.alternatenumber = alternatenumber;
 }
 
@@ -140,11 +157,13 @@ public void setPassword(String password) {
 	this.password = password;
 }
 
-public Integer getDateofjoining() {
+ 
+
+public Date getDateofjoining() {
 	return dateofjoining;
 }
 
-public void setDateofjoining(Integer dateofjoining) {
+public void setDateofjoining(Date dateofjoining) {
 	this.dateofjoining = dateofjoining;
 }
 
@@ -186,6 +205,38 @@ public String getStatus() {
 
 public void setStatus(String status) {
 	this.status = status;
+}
+
+public Integer getCreateddate() {
+	return createddate;
+}
+
+public void setCreateddate(Integer createddate) {
+	this.createddate = createddate;
+}
+
+public String getCreatedby() {
+	return createdby;
+}
+
+public void setCreatedby(String createdby) {
+	this.createdby = createdby;
+}
+
+public Integer getUpdateddate() {
+	return updateddate;
+}
+
+public void setUpdateddate(Integer updateddate) {
+	this.updateddate = updateddate;
+}
+
+public String getUpdatedby() {
+	return updatedby;
+}
+
+public void setUpdatedby(String updatedby) {
+	this.updatedby = updatedby;
 }
 
    
