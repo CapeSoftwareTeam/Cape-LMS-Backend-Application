@@ -36,7 +36,7 @@ public class RegisterController {
 	}	
 	
 	@PutMapping("/updateRegister")
-	public ResponseEntity<String> updateRegisterDetails(@RequestBody List<RegisterDetails> registerDetails) {
+	public ResponseEntity<String> updateRegisterDetails(@RequestBody RegisterDetails registerDetails) {
 		registerService.updateRegisterDetails(registerDetails);
 		return new ResponseEntity<String>("Employee Updated Successfully", HttpStatus.OK);
 	}

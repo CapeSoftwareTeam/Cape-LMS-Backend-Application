@@ -1,6 +1,7 @@
 package com.capeelectric.model;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,7 +49,7 @@ public class RegisterDetails {
    @Column(name="DATE_OF_JOINING")
    private Date dateofjoining;
    
-   @Column(name="DEPARTMENT ")
+   @Column(name="DEPARTMENT")
    private String department;
    
    @Column(name="DESIGNATION")
@@ -61,13 +62,13 @@ public class RegisterDetails {
    private String officelocation;
    
    @Column(name="CREATED_DATE")
-   private Integer createddate;
+   private LocalDateTime createddate;
    
    @Column(name="CREATED_BY")
    private String createdby;
    
    @Column(name="UPDATED_DATE")
-   private Integer updateddate;
+   private LocalDateTime updateddate;
    
    @Column(name="UPDATED_BY")
    private String updatedby;
@@ -207,13 +208,7 @@ public void setStatus(String status) {
 	this.status = status;
 }
 
-public Integer getCreateddate() {
-	return createddate;
-}
 
-public void setCreateddate(Integer createddate) {
-	this.createddate = createddate;
-}
 
 public String getCreatedby() {
 	return createdby;
@@ -223,12 +218,28 @@ public void setCreatedby(String createdby) {
 	this.createdby = createdby;
 }
 
-public Integer getUpdateddate() {
+
+
+public LocalDateTime getCreateddate(LocalDateTime createdDate) {
+	return createddate;
+}
+
+public void setCreateddate(LocalDateTime localDateTime) {
+	this.createddate = localDateTime;
+}
+
+
+
+public LocalDateTime getUpdateddate() {
 	return updateddate;
 }
 
-public void setUpdateddate(Integer updateddate) {
+public void setUpdateddate(LocalDateTime updateddate) {
 	this.updateddate = updateddate;
+}
+
+public LocalDateTime getCreateddate() {
+	return createddate;
 }
 
 public String getUpdatedby() {
@@ -238,6 +249,8 @@ public String getUpdatedby() {
 public void setUpdatedby(String updatedby) {
 	this.updatedby = updatedby;
 }
+
+
 
    
 

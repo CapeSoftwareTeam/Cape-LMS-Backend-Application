@@ -3,6 +3,7 @@
  */
 package com.capeelectric.serviceImpl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,12 +17,12 @@ import com.capeelectric.service.RegisterService;
 /**
  * @author Priyanka
  *
- */
+ **/
 @Service
 public class RegisterServiceImpl implements RegisterService{
 	
 	@Autowired
-	private RegisterRepo registerRepo;
+	private RegisterRepo registerRepo;      
 	
 	@Override
     public void  addRegisterDetails(RegisterDetails registerDetails) throws Exception {
@@ -30,23 +31,35 @@ public class RegisterServiceImpl implements RegisterService{
 			Optional<RegisterDetails> register = registerRepo.findByEmpid(registerDetails.getEmpid());
 			if (!register.isPresent()) {
 				registerDetails.setStatus("Active");
+				registerDetails.setCreateddate(LocalDateTime.now());
+				
+				registerDetails.setCreatedby("HR");
+				
 				registerRepo.save(registerDetails); 
 			}
 			else {
-				throw new Exception("Data Already exist");
+				throw new Exception("Invalid input");
 			}
+			
 		}
-		else {
-			throw new Exception("Invalid input");
-		}
+			else {
+				throw new Exception(" Employee Data Already exist");
+			}
+	
+		
+		
 
-	}
+}
 
+
+	
 
 
 	@Override
-	public void updateRegisterDetails(List<RegisterDetails> registerDetails) {
-		registerRepo.saveAll(registerDetails);
+	public void updateRegisterDetails(RegisterDetails registerDetails) {
+		registerDetails.setUpdateddate(LocalDateTime.now());
+		registerDetails.setUpdatedby(registerDetails.getName());
+		registerRepo.save(registerDetails);
 		
 		// TODO Auto-generated method stub
 		

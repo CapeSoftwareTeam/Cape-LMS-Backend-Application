@@ -20,7 +20,7 @@ public interface RegisterService {
 	
 	
 	 public void addRegisterDetails(RegisterDetails registerDetails) throws Exception;
-	 public void updateRegisterDetails(List<RegisterDetails> registerDetails);
+	 public void updateRegisterDetails(RegisterDetails registerDetails);
 	 public void getRegisterDetails(Integer empid);
 	 public void deleteRegisterDetails(Integer empid);
 
