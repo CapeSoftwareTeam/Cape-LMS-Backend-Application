@@ -50,12 +50,7 @@ public class RegisterServiceImpl implements RegisterService{
 		
 
 }
-
-
-	
-
-
-	@Override
+   @Override
 	public void updateRegisterDetails(RegisterDetails registerDetails) {
 		registerDetails.setUpdateddate(LocalDateTime.now());
 		registerDetails.setUpdatedby(registerDetails.getName());
@@ -64,12 +59,12 @@ public class RegisterServiceImpl implements RegisterService{
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
+  @Override
 	public void getRegisterDetails(Integer empid) {
 		registerRepo.findById(empid);
 	}
 
-	@Override
+  @Override
 	public void deleteRegisterDetails(Integer empid  ) {
  		Optional<RegisterDetails> register = registerRepo.findById(empid);
  		if (register.isPresent()) {
