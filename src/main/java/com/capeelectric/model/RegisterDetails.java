@@ -11,247 +11,285 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="register_table")
+@Table(name = "register_table")
 
 public class RegisterDetails {
-   @Id
-   @Column(name=" REGISTER_ID")
-   @GeneratedValue(strategy = GenerationType.AUTO)
-   private Integer registerid;
-   
-   @Column(name="EMP_ID")
-   private String empid;
-    
-   @Column(name="NAME")
-   private String name;
-   
-   @Column(name="DOB")
-   private Date dob;
-   
-   @Column(name="GENDER")
-   private String gender;
-   
-   @Column(name="MARITAL_STATUS")
-   private String maritalstatus;
-   
-   @Column(name="MOBILE_NUMBER")
-   private String mobilenumber;
-   
-   @Column(name="ALTERNATE_NUMBER")
-   private String alternatenumber;
-   
-   @Column(name="EMAIL_ID")
-   private String emailid;
-   
-   @Column(name="PASSWORD ")
-   private String password;
-   
-   @Column(name="DATE_OF_JOINING")
-   private Date dateofjoining;
-   
-   @Column(name="DEPARTMENT")
-   private String department;
-   
-   @Column(name="DESIGNATION")
-   private String designation;
-   
-   @Column(name="TOTAL_EXPERIENCE")
-   private Integer totalexperience;
-   
-   @Column(name="OFFICE_LOCATION")
-   private String officelocation;
-   
-   @Column(name="CREATED_DATE")
-   private LocalDateTime createddate;
-   
-   @Column(name="CREATED_BY")
-   private String createdby;
-   
-   @Column(name="UPDATED_DATE")
-   private LocalDateTime updateddate;
-   
-   @Column(name="UPDATED_BY")
-   private String updatedby;
-   
-   @Column(name="STATUS")
-   private String status;
+	@Id
+	@Column(name = " REGISTER_ID")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer registerid;
 
-public Integer getRegisterid() {
-	return registerid;
-}
+	@Column(name = "EMP_ID")
+	private String empid;
 
-public void setRegisterid(Integer registerid) {
-	this.registerid = registerid;
-}
+	@Column(name = "NAME")
+	private String name;
 
-public String getEmpid() {
-	return empid;
-}
+	@Column(name = "DOB") 
+	private Date dob;
 
-public void setEmpid(String empid) {
-	this.empid = empid;
-}
+	@Column(name = "GENDER")
+	private String gender;
 
-public String getName() {
-	return name;
-}
+	@Column(name = "MARITAL_STATUS")
+	private String maritalstatus;
 
-public void setName(String name) {
-	this.name = name;
-}
+	@Column(name = "MOBILE_NUMBER")
+	private String mobilenumber;
 
-public Date getDob() {
-	return dob;
-}
+	@Column(name = "ALTERNATE_NUMBER")
+	private String alternatenumber;
 
-public void setDob(Date dob) {
-	this.dob = dob;
-}
+	@Column(name = "EMAIL_ID")
+	private String emailid;
 
-public String getGender() {
-	return gender;
-}
+	@Column(name = "PASSWORD ")
+	private String password;
 
-public void setGender(String gender) {
-	this.gender = gender;
-}
+	@Column(name = "DATE_OF_JOINING")
+	private Date dateofjoining;
 
-public String getMaritalstatus() {
-	return maritalstatus;
-}
+	@Column(name = "DEPARTMENT")
+	private String department;
 
-public void setMaritalstatus(String maritalstatus) {
-	this.maritalstatus = maritalstatus;
-}
+	@Column(name = "DESIGNATION")
+	private String designation;
+	
+	@Column(name="CAPE_EXPERIENCE")
+    private String capeexperience;
+	
+	@Column(name="OTHER_EXPERIENCE")
+	private String otherexperience;
+	
+	@Column(name = "TOTAL_EXPERIENCE")
+	private Integer totalexperience;
 
+	@Column(name = "STATE")
+	private String state;
 
+	@Column(name = "CITY")
+	private String city;
 
-public String getMobilenumber() {
-	return mobilenumber;
-}
+	@Column(name = "MANAGER_NAME")
+	private String managername;
 
-public void setMobilenumber(String mobilenumber) {
-	this.mobilenumber = mobilenumber;
-}
+	@Column(name = "MANAGER_EMAIL")
+	private String manageremail;
 
-public String getAlternatenumber() {
-	return alternatenumber;
-}
+	@Column(name = "CREATED_DATE")
+	private LocalDateTime createddate;
 
-public void setAlternatenumber(String alternatenumber) {
-	this.alternatenumber = alternatenumber;
-}
+	@Column(name = "CREATED_BY")
+	private String createdby;
 
-public String getEmailid() {
-	return emailid;
-}
+	@Column(name = "UPDATED_DATE")
+	private LocalDateTime updateddate;
 
-public void setEmailid(String emailid) {
-	this.emailid = emailid;
-}
+	@Column(name = "UPDATED_BY")
+	private String updatedby;
 
-public String getPassword() {
-	return password;
-}
+	@Column(name = "STATUS")
+	private String status;
 
-public void setPassword(String password) {
-	this.password = password;
-}
+	public Integer getRegisterid() {
+		return registerid;
+	}
 
- 
+	public void setRegisterid(Integer registerid) {
+		this.registerid = registerid;
+	}
 
-public Date getDateofjoining() {
-	return dateofjoining;
-}
+	public String getEmpid() {
+		return empid;
+	}
 
-public void setDateofjoining(Date dateofjoining) {
-	this.dateofjoining = dateofjoining;
-}
+	public void setEmpid(String empid) {
+		this.empid = empid;
+	}
 
-public String getDepartment() {
-	return department;
-}
+	public String getName() {
+		return name;
+	}
 
-public void setDepartment(String department) {
-	this.department = department;
-}
+	public void setName(String name) {
+		this.name = name;
+	}
 
-public String getDesignation() {
-	return designation;
-}
+	public Date getDob() {
+		return dob;
+	}
 
-public void setDesignation(String designation) {
-	this.designation = designation;
-}
+	public void setDob(Date dob) {
+		this.dob = dob;
+	}
 
-public Integer getTotalexperience() {
-	return totalexperience;
-}
+	public String getGender() {
+		return gender;
+	}
 
-public void setTotalexperience(Integer totalexperience) {
-	this.totalexperience = totalexperience;
-}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 
-public String getOfficelocation() {
-	return officelocation;
-}
+	public String getMaritalstatus() {
+		return maritalstatus;
+	}
 
-public void setOfficelocation(String officelocation) {
-	this.officelocation = officelocation;
-}
+	public void setMaritalstatus(String maritalstatus) {
+		this.maritalstatus = maritalstatus;
+	}
 
-public String getStatus() {
-	return status;
-}
+	public String getMobilenumber() {
+		return mobilenumber;
+	}
 
-public void setStatus(String status) {
-	this.status = status;
-}
+	public void setMobilenumber(String mobilenumber) {
+		this.mobilenumber = mobilenumber;
+	}
 
+	public String getAlternatenumber() {
+		return alternatenumber;
+	}
 
+	public void setAlternatenumber(String alternatenumber) {
+		this.alternatenumber = alternatenumber;
+	}
 
-public String getCreatedby() {
-	return createdby;
-}
+	public String getEmailid() {
+		return emailid;
+	}
 
-public void setCreatedby(String createdby) {
-	this.createdby = createdby;
-}
+	public void setEmailid(String emailid) {
+		this.emailid = emailid;
+	}
 
+	public String getPassword() {
+		return password;
+	}
 
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-public LocalDateTime getCreateddate(LocalDateTime createdDate) {
-	return createddate;
-}
+	public Date getDateofjoining() {
+		return dateofjoining;
+	}
 
-public void setCreateddate(LocalDateTime localDateTime) {
-	this.createddate = localDateTime;
-}
+	public void setDateofjoining(Date dateofjoining) {
+		this.dateofjoining = dateofjoining;
+	}
 
+	public String getDepartment() {
+		return department;
+	}
 
+	public void setDepartment(String department) {
+		this.department = department;
+	}
 
-public LocalDateTime getUpdateddate() {
-	return updateddate;
-}
+	public String getDesignation() {
+		return designation;
+	}
 
-public void setUpdateddate(LocalDateTime updateddate) {
-	this.updateddate = updateddate;
-}
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
 
-public LocalDateTime getCreateddate() {
-	return createddate;
-}
+	public String getCapeexperience() {
+		return capeexperience;
+	}
 
-public String getUpdatedby() {
-	return updatedby;
-}
+	public void setCapeexperience(String capeexperience) {
+		this.capeexperience = capeexperience;
+	}
 
-public void setUpdatedby(String updatedby) {
-	this.updatedby = updatedby;
-}
+	public String getOtherexperience() {
+		return otherexperience;
+	}
 
+	public void setOtherexperience(String otherexperience) {
+		this.otherexperience = otherexperience;
+	}
 
+	public Integer getTotalexperience() {
+		return totalexperience;
+	}
 
-   
+	public void setTotalexperience(Integer totalexperience) {
+		this.totalexperience = totalexperience;
+	}
 
-}
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getManagername() {
+		return managername;
+	}
+
+	public void setManagername(String managername) {
+		this.managername = managername;
+	}
+
+	public String getManageremail() {
+		return manageremail;
+	}
+
+	public void setManageremail(String manageremail) {
+		this.manageremail = manageremail;
+	}
+
+	public LocalDateTime getCreateddate() {
+		return createddate;
+	}
+
+	public void setCreateddate(LocalDateTime createddate) {
+		this.createddate = createddate;
+	}
+
+	public String getCreatedby() {
+		return createdby;
+	}
+
+	public void setCreatedby(String createdby) {
+		this.createdby = createdby;
+	}
+
+	public LocalDateTime getUpdateddate() {
+		return updateddate;
+	}
+
+	public void setUpdateddate(LocalDateTime updateddate) {
+		this.updateddate = updateddate;
+	}
+
+	public String getUpdatedby() {
+		return updatedby;
+	}
+
+	public void setUpdatedby(String updatedby) {
+		this.updatedby = updatedby;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+
+		}

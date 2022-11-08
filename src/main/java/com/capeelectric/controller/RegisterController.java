@@ -25,9 +25,10 @@ import com.capeelectric.service.RegisterService;
  * @author Priyanka
  *
  */
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController 
 @RequestMapping("api/v1")
-public class RegisterController {
+ public class RegisterController {
 	
 	@Autowired
 	private RegisterService registerService;
