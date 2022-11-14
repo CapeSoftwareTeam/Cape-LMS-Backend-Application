@@ -16,6 +16,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -43,6 +44,9 @@ public class RegisterServiceImpl implements RegisterService {
 
 	@Autowired
 	private AWSConfig awsConfiguration;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@Override
 	public void addRegisterDetails(RegisterDetails registerDetails) throws Exception {
@@ -50,6 +54,7 @@ public class RegisterServiceImpl implements RegisterService {
 		if (null != registerDetails && null != registerDetails.getEmpid()) {
 			Optional<RegisterDetails> register = registerRepo.findByEmpid(registerDetails.getEmpid());
 			if (!register.isPresent()) {
+				registerDetails.setPassword(passwordEncoder.encode(registerDetails.getPassword()));
 				registerDetails.setStatus("Active");
 				registerDetails.setCreateddate(LocalDateTime.now());
 

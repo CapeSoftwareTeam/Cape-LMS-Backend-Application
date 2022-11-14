@@ -11,7 +11,7 @@ import com.capeelectric.model.RegisterDetails;
 public interface UserDetailsService {
     public  RegisterDetails saveUser( RegisterDetails user);
 
-	public RegisterDetails findByUserName(String email) throws ForgotPasswordException, IOException;
+	//public RegisterDetails findByUserName(String email) throws ForgotPasswordException, IOException;
 
 	public RegisterDetails updatePassword(String email, String password, Integer otp) throws UpdatePasswordException;
 

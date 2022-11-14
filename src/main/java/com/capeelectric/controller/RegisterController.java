@@ -23,7 +23,7 @@ import com.capeelectric.service.RegisterService;
  *
  */
 @RestController 
-@RequestMapping("api/v1")
+@RequestMapping("/api/v1")
  public class RegisterController {
 	
 	@Autowired
