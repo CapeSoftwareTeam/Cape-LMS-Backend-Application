@@ -15,7 +15,7 @@ import com.capeelectric.model.RegisterDetails;
 public class JwtRegisterDetailsService implements UserDetailsService {
 	@Autowired
 	private com.capeelectric.repository.RegisterRepo registrationRepository;
-
+  
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		  Optional<RegisterDetails> optional = registrationRepository.findByEmailid(username);

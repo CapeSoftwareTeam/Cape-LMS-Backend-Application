@@ -10,9 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public class Register extends RegisterDetails implements UserDetails {
 
-	  /**
-     * @author capeelectricsoftware
-     */
+	 
 	private static final long serialVersionUID = 1L;
 
 	private RegisterDetails registerDetails;

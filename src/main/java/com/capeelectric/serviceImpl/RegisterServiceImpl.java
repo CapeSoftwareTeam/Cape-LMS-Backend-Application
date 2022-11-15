@@ -101,6 +101,7 @@ public class RegisterServiceImpl implements RegisterService {
 	@Override
 	public void getRegisterDetails(Integer empid) {
 		registerRepo.findById(empid);
+		
 	}
 
 	@Override
@@ -117,7 +118,7 @@ public class RegisterServiceImpl implements RegisterService {
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		URI uri = new URI(awsConfiguration.getSendEmail()+email);
+		URI uri = new URI(awsConfiguration.getSendLmsEmail()+email);
 		EmailContent emailContent = new EmailContent();
 		emailContent.setContentDetails(content);
 		RequestEntity<EmailContent> requestEntity = new RequestEntity<>(emailContent, headers, HttpMethod.PUT, uri);

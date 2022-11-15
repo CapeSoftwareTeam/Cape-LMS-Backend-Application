@@ -19,6 +19,9 @@ public class AWSConfig {
 	
 	@Value("${aws.email.send.approval}")
 	private String sendEmailForApproval;
+	
+	@Value("${aws.email.send.lmsemail}")
+	private String sendLmsEmail;
 
 	/**
 	 * @return the sendEmailWithPDF
@@ -89,8 +92,15 @@ public class AWSConfig {
 	public void setSendEmailForApproval(String sendEmailForApproval) {
 		this.sendEmailForApproval = sendEmailForApproval;
 	}
-	
-	
+
+	public String getSendLmsEmail() {
+		return sendLmsEmail;
+	}
+
+	public void setSendLmsEmail(String sendLmsEmail) {
+		this.sendLmsEmail = sendLmsEmail;
+	}
+		
 }
 
 
