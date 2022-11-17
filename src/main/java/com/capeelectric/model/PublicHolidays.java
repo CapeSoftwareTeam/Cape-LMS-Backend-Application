@@ -1,10 +1,11 @@
 package com.capeelectric.model;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,26 +13,28 @@ import javax.persistence.Table;
 @Table(name="public_holidays")
 public class PublicHolidays {
 
+	
 	@Id
 	@Column(name="PL_ID")
-	private Integer pl_Id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer publicLeaveId;
 	
 	@Column(name="DATE")
 	private Date date;
 	
+	@Column(name="DESCRIPTION")
+	private String description;
+	
 	@Column(name="DAY")
 	private String day;
 	
+	@Column(name="YEAR")
+	private Integer year;
+	
 	@Column(name="WORK_LOCATION")
-	private String work_Location;
+	private String workLocation;
 
-	public Integer getPl_Id() {
-		return pl_Id;
-	}
 
-	public void setPl_Id(Integer pl_Id) {
-		this.pl_Id = pl_Id;
-	}
 
 	public Date getDate() {
 		return date;
@@ -49,17 +52,36 @@ public class PublicHolidays {
 		this.day = day;
 	}
 
-	public String getWork_Location() {
-		return work_Location;
+	public Integer getYear() {
+		return year;
 	}
 
-	public void setWork_Location(String work_Location) {
-		this.work_Location = work_Location;
+	public void setYear(Integer year) {
+		this.year = year;
 	}
 
-	
-	
-	
-	
-	
+	public Integer getPublicLeaveId() {
+		return publicLeaveId;
+	}
+
+	public void setPublicLeaveId(Integer publicLeaveId) {
+		this.publicLeaveId = publicLeaveId;
+	}
+
+	public String getWorkLocation() {
+		return workLocation;
+	}
+
+	public void setWorkLocation(String workLocation) {
+		this.workLocation = workLocation;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 }

@@ -40,13 +40,12 @@ import com.capeelectric.service.RegisterService;
 		registerService.updateRegisterDetails(registerDetails);
 		return new ResponseEntity<String>("Employee Updated Successfully", HttpStatus.OK);
 	}
-	 
-   @GetMapping("/getRegister/{empid}")
-  public ResponseEntity<String>getRegisterDetails(@PathVariable Integer empid){
-	  registerService.getRegisterDetails(empid);
-	  return new ResponseEntity<String>(" Get details Successfully", HttpStatus.OK);
-	  
-  }
+
+	@GetMapping("/getRegister/{empid}")
+	public ResponseEntity<RegisterDetails> getRegisterDetails(@PathVariable String empid){
+		return new ResponseEntity<RegisterDetails>(registerService.getRegisterDetails(empid),HttpStatus.OK);	
+	}
+
   @DeleteMapping("/deleteRegister/{empid}")
   public ResponseEntity<String> deleteRegisterDetails(@PathVariable Integer empid){
 	  registerService.deleteRegisterDetails(empid);

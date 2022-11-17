@@ -20,8 +20,8 @@ public interface RegisterService {
 
 	public void updateRegisterDetails(RegisterDetails registerDetails);
 
-	public void getRegisterDetails(Integer empid);
-
 	public void deleteRegisterDetails(Integer empid);
+
+	public RegisterDetails getRegisterDetails(String empid);
 
 }

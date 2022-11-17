@@ -100,10 +100,12 @@ public class RegisterServiceImpl implements RegisterService {
 
 	}
 
+
+
 	@Override
-	public void getRegisterDetails(Integer empid) {
-		registerRepo.findById(empid);
-		
+	public RegisterDetails getRegisterDetails(String empid) {
+		// TODO Auto-generated method stub
+		return registerRepo.findByEmpid(empid).get();
 	}
 
 	@Override

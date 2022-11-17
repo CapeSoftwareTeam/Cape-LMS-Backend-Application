@@ -6,13 +6,15 @@ import org.springframework.stereotype.Service;
 
 import com.capeelectric.model.PublicHolidays;
 
-/**
- * @author Gokul
- *
- */
 @Service
 public interface PublicHolidaysService {
-   
 
-	public String setPublicHolidays(List<PublicHolidays> publicHoliday);
+	public String addPublicHolidays(List<PublicHolidays> publicHoliday);
+
+	void updatePublicHolidays(List<PublicHolidays> publicHolidays);
+
+	List<PublicHolidays> getPublicHolidays();
+
+	void deletePublicHolidays(Integer publicLeaveId);
+
 }

@@ -61,8 +61,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		httpSecurity.cors().and()
 				// dont authenticate this particular request
 				.authorizeRequests()
-				.antMatchers("/api/v1/authenticate/**",
-						  "/api/v1/addRegister")
+				.antMatchers("/**" )
 				.permitAll().antMatchers(HttpMethod.OPTIONS, "/**").permitAll().
 				// all other requests need to be authenticated
 				anyRequest().authenticated().and().
