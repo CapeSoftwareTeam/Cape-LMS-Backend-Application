@@ -1,3 +1,4 @@
+
 /**
  * 
  */
@@ -54,6 +55,7 @@ public class RegisterServiceImpl implements RegisterService {
 		if (null != registerDetails && null != registerDetails.getEmpid()) {
 			Optional<RegisterDetails> register = registerRepo.findByEmpid(registerDetails.getEmpid());
 			if (!register.isPresent()) {
+				String password = registerDetails.getPassword();
 				registerDetails.setPassword(passwordEncoder.encode(registerDetails.getPassword()));
 				registerDetails.setStatus("Active");
 				registerDetails.setCreateddate(LocalDateTime.now());
@@ -68,7 +70,7 @@ public class RegisterServiceImpl implements RegisterService {
 						+ "This application will help you in applying and managing your leave in cape electric. Kindly note your login and one time password below.\r\n"
 						+ "\r\n"
 						+ "Login:"+registerDetails.getEmailid()+"\r\n"
-						+ "Password:"+registerDetails.getPassword()+"\r\n"
+						+ "Password:"+password+"\r\n"
 						+ "\r\n"
 						+ "You can change the password using this link "+ webUrl +"\r\n"
 						+ "\r\n"
@@ -79,11 +81,11 @@ public class RegisterServiceImpl implements RegisterService {
 						+ "cape electric Pvt Ltd,\r\n"
 						+ "Oragadam.");
 			} else {
-				throw new Exception("Invalid input");
+				throw new Exception("Employee Data Already exist");
 			}
 
 		} else {
-			throw new Exception(" Employee Data Already exist");
+			throw new Exception("Invalid input");
 		}
 
 	}
@@ -124,8 +126,8 @@ public class RegisterServiceImpl implements RegisterService {
 		RequestEntity<EmailContent> requestEntity = new RequestEntity<>(emailContent, headers, HttpMethod.PUT, uri);
 		ParameterizedTypeReference<EmailContent> typeRef = new ParameterizedTypeReference<EmailContent>() {};
 
-		ResponseEntity<EmailContent> exchange = restTemplate.exchange(requestEntity, typeRef);
-		System.out.println(exchange);
+		//ResponseEntity<EmailContent> exchange = restTemplate.exchange(requestEntity, typeRef);
+//		System.out.println(exchange);
 
 	}
 
