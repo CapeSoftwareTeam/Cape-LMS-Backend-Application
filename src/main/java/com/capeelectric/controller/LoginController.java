@@ -1,16 +1,20 @@
 package com.capeelectric.controller;
 
 
+import java.io.IOException;
 import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,6 +68,14 @@ public class LoginController {
 		logger.debug("Create Authenticate Token ends");
 		return ResponseEntity.ok(new AuthenticationResponseRegisterDetails(token, register.getRegisterDetails()));
 		
+	}
+	
+	@GetMapping("/sendotp/{email}/{mobileNumber}")
+	public ResponseEntity<Void> sendOtp(@PathVariable String email,@PathVariable String mobileNumber)
+			throws IOException{
+		System.out.println("hi");
+		loginService.sendOtp(email, mobileNumber);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 	private String authenticate(AuthenticationRequest authenticationRequest)
