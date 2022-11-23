@@ -24,4 +24,8 @@ public interface RegisterService {
 
 	public RegisterDetails getRegisterDetails(String empid);
 
+	public List<RegisterDetails> getEmpidDetails();
+
+//	public void getMaxEmpId();
+
 }

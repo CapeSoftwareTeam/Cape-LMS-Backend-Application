@@ -7,6 +7,7 @@ package com.capeelectric.serviceImpl;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,4 +134,26 @@ public class RegisterServiceImpl implements RegisterService {
 
 	}
 
-}
+	@Override
+	public List<RegisterDetails> getEmpidDetails() {
+		// TODO Auto-generated method stub
+		return ( List<RegisterDetails>) registerRepo.findAll();
+	}
+
+//	@Override
+//	public String getMaxEmpId() {
+//		 
+//		Iterable<RegisterDetails> empId = registerRepo.findAll();
+//		for (RegisterDetails registerDetails : empId) {
+//			 for (String string : registerDetails.getEmpid().split("_")) {
+//				 String[] split = string.split("_");
+//		 			 if (Integer.parseInt(split[1])  > i)
+//		 			 {
+//							return "CAPE_"+(Integer.parseInt(split[1])+1);
+////					return i;
+//			 }
+//		}
+//	}
+
+//}
+} 
