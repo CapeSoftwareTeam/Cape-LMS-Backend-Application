@@ -3,6 +3,8 @@
  */
 package com.capeelectric.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,6 +54,18 @@ import com.capeelectric.service.RegisterService;
 	  return new ResponseEntity<String>("Employee details are deleted Successfully", HttpStatus.OK);
   }
   
+   
+  @GetMapping("/getmaxempid")
+  public ResponseEntity<String> getMaxEmpId(){
+//	  registerService.getMaxEmpId();
+	  return new ResponseEntity<String>("Employee details are deleted Successfully", HttpStatus.OK);
+  }
+  
+  @GetMapping("/empid")
+  public ResponseEntity< List<RegisterDetails> > getEmpidDetails(){
+   List<RegisterDetails> registerDetails = registerService.getEmpidDetails();
+  	return new ResponseEntity<List<RegisterDetails> >(registerDetails,HttpStatus.OK);
+  }
     
   
 	
