@@ -43,7 +43,7 @@ public class RegisterDetails {
 	@Column(name = "EMAIL_ID")
 	private String emailid;
 
-	@Column(name = "PASSWORD ")
+	@Column(name = "PASSWORD")
 	private String password;
 
 	@Column(name = "DATE_OF_JOINING")

@@ -6,6 +6,8 @@ public class AuthenticationRequest {
 	private String password;
 	private String empId;
 	private String mobileNumber;
+	private String otp;
+	private String otpSession;
 	
 	
 	
@@ -33,6 +35,21 @@ public class AuthenticationRequest {
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
+	public String getOtp() {
+		return otp;
+	}
+	public void setOtp(String otp) {
+		this.otp = otp;
+	}
+	public String getOtpSession() {
+		return otpSession;
+	}
+	public void setOtpSession(String otpSession) {
+		this.otpSession = otpSession;
+	}
+	
+	
+	
 	
 	
 }

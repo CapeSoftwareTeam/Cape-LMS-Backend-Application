@@ -1,7 +1,8 @@
 package com.capeelectric.controller;
 
-
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.capeelectric.config.AWSConfig;
 import com.capeelectric.config.JwtTokenUtil;
 import com.capeelectric.exception.AuthenticationException;
+import com.capeelectric.exception.UpdatePasswordException;
 import com.capeelectric.model.Register;
 import com.capeelectric.model.RegisterDetails;
 import com.capeelectric.repository.RegisterRepo;
@@ -33,32 +36,32 @@ import com.capeelectric.serviceImpl.RegistrationDetailsServiceImpl;
 
 @RestController
 @RequestMapping("/api/v1")
-public class LoginController {
+public class LoginController<UpdatePasswordRequest> {
 
 	@Autowired
 	private RegistrationDetailsServiceImpl registrationDetailsServiceImpl;
-	
+
 	@Autowired
 	private LoginService loginService;
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
+
 	@Autowired
 	private AWSConfig awsConfig;
-	
+
 	@Autowired
 	private RegisterRepo registerRepo;
 
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
-	
+
 	@PostMapping("/authenticate")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)
 			throws Exception, AuthenticationException {
-		
+
 		logger.debug("Create Authenticate Token starts");
 
 		final Register register = registrationDetailsServiceImpl
@@ -67,22 +70,39 @@ public class LoginController {
 		final String token = jwtTokenUtil.generateToken(register);
 		logger.debug("Create Authenticate Token ends");
 		return ResponseEntity.ok(new AuthenticationResponseRegisterDetails(token, register.getRegisterDetails()));
-		
-	}
-	
-	@GetMapping("/sendotp/{email}/{mobileNumber}")
-	public ResponseEntity<Void> sendOtp(@PathVariable String email,@PathVariable String mobileNumber)
-			throws IOException{
-		System.out.println("hi");
-		loginService.sendOtp(email, mobileNumber);
-		return new ResponseEntity<Void>(HttpStatus.OK);
+
 	}
 
-	private String authenticate(AuthenticationRequest authenticationRequest)
-			throws AuthenticationException {
+	@PutMapping("/updatePassword/{email}/{password}")
+	public ResponseEntity<String> updatePassword(@PathVariable String email, @PathVariable String password) {
+		loginService.updatePassword(email, password);
+		return new ResponseEntity<String>("PassWord  Updated!", HttpStatus.OK);
+
+	}
+
+	@PutMapping("/verifyOtp")
+	public ResponseEntity<String> VerifyOtp(@RequestBody AuthenticationRequest authenticationRequest)
+			throws UpdatePasswordException {
+		RegisterDetails registerDetails = loginService.VerifyOtp(authenticationRequest);
+
+		return new ResponseEntity<String>("Otp verified SuccesFully", HttpStatus.OK);
+
+	}
+
+	@GetMapping("/sendotp/{userName}")
+	public ResponseEntity<List<String>> sendOtp(@PathVariable String userName) throws Exception {
+		System.out.println("hi");
+		RegisterDetails registerDetails = loginService.emailGet(userName);
+		List<String> dhana = new ArrayList<String>();
+		dhana.add(registerDetails.getEmailid());
+		dhana.add(loginService.sendOtp(userName));
+		return new ResponseEntity<List<String>>(dhana, HttpStatus.OK);
+	}
+
+	private String authenticate(AuthenticationRequest authenticationRequest) throws AuthenticationException {
 
 		Optional<RegisterDetails> registerDetails = null;
-		
+
 		if (null != authenticationRequest.getEmail()) {
 			registerDetails = registerRepo.findByEmailid(authenticationRequest.getEmail());
 		} else if (null != authenticationRequest.getEmpId()) {
@@ -91,7 +111,7 @@ public class LoginController {
 			registerDetails = registerRepo.findByMobilenumber(authenticationRequest.getMobileNumber());
 		}
 
-		if (null !=registerDetails && registerDetails.isPresent() && null != registerDetails.get()) {
+		if (null != registerDetails && registerDetails.isPresent() && null != registerDetails.get()) {
 
 			try {
 				System.out.println(registerDetails.get().getEmailid());
@@ -113,4 +133,3 @@ public class LoginController {
 	}
 
 }
-
