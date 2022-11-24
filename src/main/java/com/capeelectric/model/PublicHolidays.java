@@ -20,7 +20,7 @@ public class PublicHolidays {
 	private Integer publicLeaveId;
 	
 	@Column(name="DATE")
-	private Date date;
+	private String date;
 	
 	@Column(name="DESCRIPTION")
 	private String description;
@@ -33,16 +33,6 @@ public class PublicHolidays {
 	
 	@Column(name="WORK_LOCATION")
 	private String workLocation;
-
-
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
 
 	public String getDay() {
 		return day;
@@ -82,6 +72,14 @@ public class PublicHolidays {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 }
