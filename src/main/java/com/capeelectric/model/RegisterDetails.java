@@ -64,11 +64,22 @@ public class RegisterDetails {
 	@Column(name = "TOTAL_EXPERIENCE")
 	private Integer totalexperience;
 
+	@Column(name="country")
+	private String  country;
+	
 	@Column(name = "STATE")
 	private String state;
 
 	@Column(name = "CITY")
 	private String city;
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
 
 	@Column(name = "MANAGER_NAME")
 	private String managername;
