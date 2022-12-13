@@ -20,11 +20,13 @@ public interface RegisterService {
 
 	public void updateRegisterDetails(RegisterDetails registerDetails);
 
-	public void deleteRegisterDetails(Integer empid);
+	public void deleteRegisterDetails(String empid);
 
 	public RegisterDetails getRegisterDetails(String empid);
 
 	public List<RegisterDetails> getEmpidDetails();
+
+	public void updateRegister(String mobileNumber, String empid);
 
 //	public void getMaxEmpId();
 

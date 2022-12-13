@@ -33,6 +33,9 @@ public class PublicHolidays {
 	
 	@Column(name="WORK_LOCATION")
 	private String workLocation;
+	
+	@Column(name="STATUS")
+	private String status;
 
 	public String getDay() {
 		return day;
@@ -80,6 +83,14 @@ public class PublicHolidays {
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

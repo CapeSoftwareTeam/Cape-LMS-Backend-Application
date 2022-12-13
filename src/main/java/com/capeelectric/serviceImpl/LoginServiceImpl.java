@@ -62,7 +62,7 @@ public class LoginServiceImpl implements LoginService {
 					RegisterDetails registerDetails = registerRepo.get();
 					registerDetails.setUpdateddate(LocalDateTime.now());
 					registerRepository.save(registerDetails);
-					return otpSend(mobileNumber);
+//					return otpSend(mobileNumber);
 				}
 			} else {
 				System.out.println("kjhghjkjhgfhjdhfghdjfhbfndmfn");
@@ -72,7 +72,7 @@ public class LoginServiceImpl implements LoginService {
 						RegisterDetails registerDetails = registerRepoNumber.get();
 						registerDetails.setUpdateddate(LocalDateTime.now());
 						registerRepository.save(registerDetails);
-                       return otpSend(userName);
+//                       return otpSend(userName);
 					}
 				}
 			}

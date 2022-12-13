@@ -46,7 +46,7 @@ public class RegisterServiceImpl implements RegisterService {
 
 	@Autowired
 	private AWSConfig awsConfiguration;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
@@ -69,18 +69,10 @@ public class RegisterServiceImpl implements RegisterService {
 						+ "You have been successfully registered for the Leave Management systems in Cape electric private limited.\r\n"
 						+ "\r\n"
 						+ "This application will help you in applying and managing your leave in cape electric. Kindly note your login and one time password below.\r\n"
-						+ "\r\n"
-						+ "Login:"+registerDetails.getEmailid()+"\r\n"
-						+ "Password:"+password+"\r\n"
-						+ "\r\n"
-						+ "You can change the password using this link "+ webUrl +"\r\n"
-						+ "\r\n"
-						+ "Any Clarification, Please contact \"-----hr mail id-----\"\r\n"
-						+ "\r\n"
-						+ "Best Wishes\r\n"
-						+ "Admin,\r\n"
-						+ "cape electric Pvt Ltd,\r\n"
-						+ "Oragadam.");
+						+ "\r\n" + "Login:" + registerDetails.getEmailid() + "\r\n" + "Password:" + password + "\r\n"
+						+ "\r\n" + "You can change the password using this link " + webUrl + "\r\n" + "\r\n"
+						+ "Any Clarification, Please contact \"-----hr mail id-----\"\r\n" + "\r\n" + "Best Wishes\r\n"
+						+ "Admin,\r\n" + "cape electric Pvt Ltd,\r\n" + "Oragadam.");
 			} else {
 				throw new Exception("Employee Data Already exist");
 			}
@@ -101,8 +93,6 @@ public class RegisterServiceImpl implements RegisterService {
 
 	}
 
-
-
 	@Override
 	public RegisterDetails getRegisterDetails(String empid) {
 		// TODO Auto-generated method stub
@@ -110,8 +100,8 @@ public class RegisterServiceImpl implements RegisterService {
 	}
 
 	@Override
-	public void deleteRegisterDetails(Integer empid) {
-		Optional<RegisterDetails> register = registerRepo.findById(empid);
+	public void deleteRegisterDetails(String empid) {
+		Optional<RegisterDetails> register = registerRepo.findByEmpid(empid);
 		if (register.isPresent()) {
 			RegisterDetails registerData = register.get();
 			registerData.setStatus("InActive");
@@ -120,16 +110,18 @@ public class RegisterServiceImpl implements RegisterService {
 	}
 
 	public void sendEmail(String email, String content) throws URISyntaxException {
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		URI uri = new URI(awsConfiguration.getSendLmsEmail()+email);
+		URI uri = new URI(awsConfiguration.getSendLmsEmail() + email);
 		EmailContent emailContent = new EmailContent();
 		emailContent.setContentDetails(content);
 		RequestEntity<EmailContent> requestEntity = new RequestEntity<>(emailContent, headers, HttpMethod.PUT, uri);
-		ParameterizedTypeReference<EmailContent> typeRef = new ParameterizedTypeReference<EmailContent>() {};
+		ParameterizedTypeReference<EmailContent> typeRef = new ParameterizedTypeReference<EmailContent>() {
+		};
 
-		//ResponseEntity<EmailContent> exchange = restTemplate.exchange(requestEntity, typeRef);
+		// ResponseEntity<EmailContent> exchange = restTemplate.exchange(requestEntity,
+		// typeRef);
 //		System.out.println(exchange);
 
 	}
@@ -137,7 +129,19 @@ public class RegisterServiceImpl implements RegisterService {
 	@Override
 	public List<RegisterDetails> getEmpidDetails() {
 		// TODO Auto-generated method stub
-		return ( List<RegisterDetails>) registerRepo.findAll();
+		return (List<RegisterDetails>) registerRepo.findAll();
+	}
+
+	@Override
+	public void updateRegister(String mobileNumber, String empid) {
+		Optional<RegisterDetails> register = registerRepo.findByEmpid(empid);
+		if (register.isPresent()) {
+			register.get().setMobilenumber(mobileNumber);
+			registerRepo.save(register.get());
+		} else {
+
+		}
+
 	}
 
 //	@Override
@@ -156,4 +160,4 @@ public class RegisterServiceImpl implements RegisterService {
 //	}
 
 //}
-} 
+}

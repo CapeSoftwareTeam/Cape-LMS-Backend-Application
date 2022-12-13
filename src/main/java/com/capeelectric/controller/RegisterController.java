@@ -42,6 +42,12 @@ import com.capeelectric.service.RegisterService;
 		registerService.updateRegisterDetails(registerDetails);
 		return new ResponseEntity<String>("Employee Updated Successfully", HttpStatus.OK);
 	}
+	
+	@PutMapping("/updateRegister/{mobileNumber}/{empid}")
+	public ResponseEntity<String> updateRegister(@PathVariable String mobileNumber,@PathVariable String empid) {
+		registerService.updateRegister(mobileNumber,empid);
+		return new ResponseEntity<String>("Your mobile updated successfully", HttpStatus.OK);
+	}
 
 	@GetMapping("/getRegister/{empid}")
 	public ResponseEntity<RegisterDetails> getRegisterDetails(@PathVariable String empid){
@@ -49,7 +55,7 @@ import com.capeelectric.service.RegisterService;
 	}
 
   @DeleteMapping("/deleteRegister/{empid}")
-  public ResponseEntity<String> deleteRegisterDetails(@PathVariable Integer empid){
+  public ResponseEntity<String> deleteRegisterDetails(@PathVariable String empid){
 	  registerService.deleteRegisterDetails(empid);
 	  return new ResponseEntity<String>("Employee details are deleted Successfully", HttpStatus.OK);
   }
