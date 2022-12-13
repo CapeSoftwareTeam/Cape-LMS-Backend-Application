@@ -1,6 +1,6 @@
 package com.capeelectric.exception;
 
-public class LoginException {
+public class LoginException extends Throwable {
 	private static final long serialVersionUID = 1L;
 	
 	private String message;
@@ -19,6 +19,7 @@ public class LoginException {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
 	
 
 	

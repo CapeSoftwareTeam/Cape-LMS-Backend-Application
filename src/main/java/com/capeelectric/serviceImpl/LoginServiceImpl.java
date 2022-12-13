@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.capeelectric.config.OtpConfig;
+import com.capeelectric.exception.ChangePasswordException;
 import com.capeelectric.exception.UpdatePasswordException;
 import com.capeelectric.model.Register;
 import com.capeelectric.model.RegisterDetails;
@@ -44,42 +45,45 @@ public class LoginServiceImpl implements LoginService {
 	private BCryptPasswordEncoder passwordEncoder;
 
 	@Override
-	public String sendOtp(String userName) throws Exception {
+	public String sendOtp(String userName) throws UpdatePasswordException {
 		// TODO Auto-generated method stub
 		if (userName != null) {
-			System.out.println("kjhgfcgvhjkhgfdghjhgf");
+			
 			Optional<RegisterDetails> registerRepo = registerRepository.findByEmailid(userName);
 			Optional<RegisterDetails> registerRepoNumber = registerRepository.findByMobilenumber(userName);
-			System.out.println("kjd");
+			
 
 			if (registerRepo.isPresent() && registerRepo.get().getEmailid() != null) {
-				System.out.println("ishgfhjkljhgjkhgf");
+				
 				String mobileNumber = registerRepo.get().getMobilenumber();
 				boolean isValidMobileNumber = isValidMobileNumber(mobileNumber);
 				if (isValidMobileNumber) {
-					System.out.println("kjd5");
+					
 					logger.debug("Given mobileNumber: {}", isValidMobileNumber);
 					RegisterDetails registerDetails = registerRepo.get();
 					registerDetails.setUpdateddate(LocalDateTime.now());
 					registerRepository.save(registerDetails);
 //					return otpSend(mobileNumber);
 				}
-			} else {
-				System.out.println("kjhghjkjhgfhjdhfghdjfhbfndmfn");
+			} else if(registerRepoNumber.isPresent() && registerRepoNumber.get().getEmailid() != null) {
+				
 				if (registerRepoNumber.get().getMobilenumber().equals(userName)) {
 					boolean isValidMobileNumber = isValidMobileNumber(userName);
 					if (isValidMobileNumber) {
 						RegisterDetails registerDetails = registerRepoNumber.get();
 						registerDetails.setUpdateddate(LocalDateTime.now());
 						registerRepository.save(registerDetails);
-//                       return otpSend(userName);
+//						return otpSend(mobileNumber);
 					}
 				}
+			}
+			else {
+				throw new UpdatePasswordException("Please Enter Register Email or Mobile Number");
 			}
 
 		}
 		else {
-			throw new Exception("Invalid username");
+			throw new UpdatePasswordException("Invalid username");
 		}
 		return null;
 
@@ -98,7 +102,7 @@ public class LoginServiceImpl implements LoginService {
 					HttpMethod.GET, null, String.class);
 			return sendOtpResponse.getBody().replaceAll(SESSION_TITLE, "$1");
 		} catch (Exception e) {
-			System.out.println("done");
+			
 		}
 
 		return null;
@@ -106,12 +110,11 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public void updatePassword(String email, String password) {
-		// TODO Auto-generated method stub
-		Optional<RegisterDetails> registerRepo = registerRepository.findByEmailid(email);
+	public void updatePassword(AuthenticationRequest authenticationRequest) {
+		Optional<RegisterDetails> registerRepo = registerRepository.findByEmailid(authenticationRequest.getEmail());
 		if (registerRepo.isPresent() && registerRepo.get().getEmailid() != null) {
 			RegisterDetails registerDetails = registerRepo.get();
-			registerDetails.setPassword(passwordEncoder.encode(password));
+			registerDetails.setPassword(passwordEncoder.encode(authenticationRequest.getPassword()));
 			registerRepository.save(registerDetails);
 
 		}
@@ -119,32 +122,52 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public RegisterDetails emailGet(String userName) {
-		// TODO Auto-generated method stub
+	public RegisterDetails emailGet(String userName) throws UpdatePasswordException{
+		
 		Optional<RegisterDetails> register=registerRepository.findByEmailid(userName);
 		Optional<RegisterDetails> registerRepo=registerRepository.findByMobilenumber(userName);
-		 
+		if(userName!=null) {
+		
 		if(userName!=null && userName.contains("@")) {
-			RegisterDetails registerDetails  = register.get();
-			return registerDetails;
+			
+			
+			if(register.isPresent()) {
+				
+				RegisterDetails registerDetails  = register.get();
+				
+				return registerDetails;
+			}else {
+				throw new UpdatePasswordException("Please Enter Registred Email");
+			}
+		
 		}
 		else {
-			RegisterDetails registerDetails = registerRepo.get();
-			return registerDetails;
+			
+			if(registerRepo.isPresent()) {
+				RegisterDetails registerDetails = registerRepo.get();
+				return registerDetails;
+			}
+			else {
+				throw new UpdatePasswordException("Please Enter Registerd MobileNumber");
+			}
 		
 //			registerRepository.save(registerDetails);
 		}
+		}
+		throw new UpdatePasswordException("Please fill Email or Mobile number to proceed further!");
+		
 	}
 
 	@Override
 	public RegisterDetails VerifyOtp(AuthenticationRequest authenticationRequest) throws UpdatePasswordException {
-		// TODO Auto-generated method stub
+		
 		if (authenticationRequest.getEmail() != null) {
 			RegisterDetails register = registerRepository.findByEmailid(authenticationRequest.getEmail()).get();
 			if (register != null && register.getEmailid().equalsIgnoreCase(authenticationRequest.getEmail())) {
 				boolean value = verifyOtpMethod(authenticationRequest);
 				
 				if (value) {
+					
 					logger.debug("Successfully Otp Verified");
 				}
 				else {
@@ -189,6 +212,28 @@ public class LoginServiceImpl implements LoginService {
 
 		return success;
 		
+	}
+
+	@Override
+	public void changePassWord(AuthenticationRequest authenticationRequest) throws ChangePasswordException {
+		// TODO Auto-generated method stub
+		Optional<RegisterDetails> registerRepo = registerRepository.findByEmpid(authenticationRequest.getEmpId());
+		
+		if(registerRepo.isPresent() && registerRepo!=null) {
+			
+			if(passwordEncoder.matches(authenticationRequest.getOldPassword(), registerRepo.get().getPassword())) {
+	
+				RegisterDetails registerDetails = registerRepo.get();
+				registerDetails.setPassword(passwordEncoder.encode(authenticationRequest.getPassword()));
+				registerRepository.save(registerDetails);
+			}else {
+				throw new ChangePasswordException("Please Enter Valid Old Password");
+			}
+		}
+		else {
+			
+			throw new ChangePasswordException("Invalid Inputs");
+		}
 	}
 
 

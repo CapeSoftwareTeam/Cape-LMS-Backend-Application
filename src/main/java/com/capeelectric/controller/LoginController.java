@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.capeelectric.config.AWSConfig;
 import com.capeelectric.config.JwtTokenUtil;
 import com.capeelectric.exception.AuthenticationException;
+import com.capeelectric.exception.ChangePasswordException;
 import com.capeelectric.exception.UpdatePasswordException;
 import com.capeelectric.model.Register;
 import com.capeelectric.model.RegisterDetails;
@@ -59,7 +60,7 @@ public class LoginController<UpdatePasswordRequest> {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@PostMapping("/authenticate")
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)
+	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)  
 			throws Exception, AuthenticationException {
 
 		logger.debug("Create Authenticate Token starts");
@@ -73,11 +74,16 @@ public class LoginController<UpdatePasswordRequest> {
 
 	}
 
-	@PutMapping("/updatePassword/{email}/{password}")
-	public ResponseEntity<String> updatePassword(@PathVariable String email, @PathVariable String password) {
-		loginService.updatePassword(email, password);
-		return new ResponseEntity<String>("PassWord  Updated!", HttpStatus.OK);
+	@PutMapping("/updatePassword")
+	public ResponseEntity<String> updatePassword(@RequestBody AuthenticationRequest authenticationRequest) {
+		loginService.updatePassword(authenticationRequest);
+		return new ResponseEntity<String>("Password  Updated!", HttpStatus.OK);
 
+	}
+	@PutMapping("/changePassword")
+	public ResponseEntity<String> changePassword(@RequestBody AuthenticationRequest authenticationRequest ) throws ChangePasswordException{
+		loginService.changePassWord(authenticationRequest);
+		return new ResponseEntity<String>("New PassWord Updated Successfully!",HttpStatus.OK);
 	}
 
 	@PutMapping("/verifyOtp")
@@ -90,13 +96,14 @@ public class LoginController<UpdatePasswordRequest> {
 	}
 
 	@GetMapping("/sendotp/{userName}")
-	public ResponseEntity<List<String>> sendOtp(@PathVariable String userName) throws Exception {
+	public ResponseEntity<List<String>> sendOtp(@PathVariable String userName) throws  UpdatePasswordException {
 		System.out.println("hi");
 		RegisterDetails registerDetails = loginService.emailGet(userName);
-		List<String> dhana = new ArrayList<String>();
-		dhana.add(registerDetails.getEmailid());
-		dhana.add(loginService.sendOtp(userName));
-		return new ResponseEntity<List<String>>(dhana, HttpStatus.OK);
+		List<String> listforResponse = new ArrayList<String>();
+		listforResponse.add(loginService.sendOtp(userName));
+		listforResponse.add(registerDetails.getEmailid());
+		
+		return new ResponseEntity<List<String>>(listforResponse, HttpStatus.OK);
 	}
 
 	private String authenticate(AuthenticationRequest authenticationRequest) throws AuthenticationException {
@@ -121,11 +128,11 @@ public class LoginController<UpdatePasswordRequest> {
 				return registerDetails.get().getEmailid();
 			} catch (DisabledException e) {
 				logger.error("Authentication failed : " + e.getMessage());
-				throw new DisabledException("USER_DISABLED", e);
+				throw new DisabledException("USER_DISABLED");
 			} catch (BadCredentialsException e) {
 				logger.error("Authentication failed : " + e.getMessage());
-				throw new BadCredentialsException("INVALID_CREDENTIALS", e);
-			}
+				throw new BadCredentialsException("INVALID CREDENTIALS");
+			} 
 		} else {
 			logger.error("Invalid User");
 			throw new AuthenticationException("Invalid User");

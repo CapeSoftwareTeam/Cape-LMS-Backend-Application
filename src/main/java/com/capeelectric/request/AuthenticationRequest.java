@@ -8,6 +8,7 @@ public class AuthenticationRequest {
 	private String mobileNumber;
 	private String otp;
 	private String otpSession;
+	private String oldPassword;
 	
 	
 	
@@ -46,6 +47,12 @@ public class AuthenticationRequest {
 	}
 	public void setOtpSession(String otpSession) {
 		this.otpSession = otpSession;
+	}
+	public String getOldPassword() {
+		return oldPassword;
+	}
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
 	}
 	
 	

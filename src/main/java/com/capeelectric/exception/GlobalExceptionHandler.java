@@ -3,6 +3,7 @@ package com.capeelectric.exception;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -32,6 +33,23 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler({ UpdatePasswordException.class })
 	public ResponseEntity<ErrorMessage> handleUpdatePasswordException(UpdatePasswordException e) {
 		ErrorMessage exceptionMessage = new ErrorMessage(e.getMessage(), e.getLocalizedMessage(), "400");
+		return new ResponseEntity<ErrorMessage>(exceptionMessage, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+	}
+     
+	@ExceptionHandler({LoginException.class })
+	public ResponseEntity<ErrorMessage> handleLoginException(LoginException e) {
+		ErrorMessage exceptionMessage = new ErrorMessage(e.getMessage(), e.getLocalizedMessage(), "401");
+		return new ResponseEntity<ErrorMessage>(exceptionMessage, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler({BadCredentialsException.class })
+	public ResponseEntity<ErrorMessage> handleBadCredentialsException(BadCredentialsException e) {
+		ErrorMessage exceptionMessage = new ErrorMessage(e.getMessage(), e.getLocalizedMessage(), "401");
+		return new ResponseEntity<ErrorMessage>(exceptionMessage, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+	}
+	@ExceptionHandler({AuthenticationException.class })
+	public ResponseEntity<ErrorMessage> handleAuthenticationException(AuthenticationException e) {
+		ErrorMessage exceptionMessage = new ErrorMessage(e.getMessage(), e.getLocalizedMessage(), "401");
 		return new ResponseEntity<ErrorMessage>(exceptionMessage, new HttpHeaders(), HttpStatus.BAD_REQUEST);
 	}
 
