@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+
 import com.capeelectric.model.PublicHolidays;
 
 @Service
 public interface PublicHolidaysService {
 
-	public String addPublicHolidays(List<PublicHolidays> publicHoliday);
+	public String addPublicHolidays(List<PublicHolidays> publicHoliday) ;
 
 	void updatePublicHolidays(List<PublicHolidays> publicHolidays);
 

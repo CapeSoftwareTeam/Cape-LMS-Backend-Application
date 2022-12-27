@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import com.capeelectric.exception.FileUploadException;
 import com.capeelectric.model.FileUpload;
 
 import com.capeelectric.repository.FileUploadRepo;
@@ -25,53 +25,43 @@ public class FileUploadService {
 	@Autowired
 	private FileUploadRepo fileUploadRepository;
 
-	public Integer uploadFile(MultipartFile file, String fileSize) throws SerialException, SQLException, IOException {
-		System.out.println("dhananananananananana");
+	public Integer uploadFile(MultipartFile file, String fileSize,String componentName) throws SerialException, SQLException, IOException {
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-		System.out.println(fileName);
-//		Blob blob = new javax.sql.rowset.serial.SerialBlob(IOUtils.toByteArray(file.getInputStream());
 		Blob blob = new javax.sql.rowset.serial.SerialBlob(IOUtils.toByteArray(file.getInputStream()));
-		
 		FileUpload fileUpload = new FileUpload();
-		
 		fileUpload.setFileName(fileName);
 		fileUpload.setData(blob);
 		fileUpload.setFileType(file.getContentType());
 		fileUpload.setStatus("Active");
 		fileUpload.setFileSize(fileSize);
-		
-//		logger.debug("File Saved In DB");
+		fileUpload.setComponentName(componentName);
 		return fileUploadRepository.save(fileUpload).getFileId();
 		
 	}
-//
-	public FileUpload retrieveFileId(Integer fileId) {
-		// TODO Auto-generated method stub
+
+	public FileUpload retrieveFileId(Integer fileId) throws FileUploadException{
 		
 		if (fileId != null && fileId != 0) {
 			Optional<FileUpload> fileData = fileUploadRepository.findById(fileId);
 			if (fileData.isPresent() && null !=fileData.get() ) {
 				return fileData.get();
-			}
-		} else {
-			
+			}else {
+				throw new FileUploadException("File Not Preset");
+		} 
 		}
 		return null;
+		
 	}
 
 	public FileUpload downloadFile(Integer fileId) throws IOException {
-		// TODO Auto-generated method stub
 		if (fileId != null && fileId != 0) {
 			Optional<FileUpload> fileUpload = fileUploadRepository.findById(fileId);
 				if (fileUpload.isPresent() && fileUpload.get()!=null) {
-					System.out.println(fileUpload.get().getData()+"???????????????????");
 					return fileUpload.get();
 				} else {
-//					logger.error("File Not Preset");
 					throw new IOException("File Not Preset");
 				}
-			} else {
-//				
+			} else {			
 				throw new IOException("Id Not Preset");
 			}
 	}
@@ -103,11 +93,19 @@ public class FileUploadService {
 		}
 		
 	}
+	public FileUpload retrieveFileName(String componentName) throws FileUploadException {
+		if (componentName != null) {
+			Optional<FileUpload> fileData = fileUploadRepository.findByComponentName(componentName);
+			if (fileData.isPresent() && null !=fileData.get() ) {
+				return fileData.get();
+			}else {
+				
+				throw new FileUploadException("File Not Preset");
+		} 
+		}
+		return null;
+	}
 
-//	public List<FileUpload> retrieveFile() {
-//			// TODO Auto-generated method stub
-//		return  (List<FileUpload>) fileUploadRepository.findAll();
-//	}
 	
 	
 	

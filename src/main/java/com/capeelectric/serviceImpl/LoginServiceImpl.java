@@ -46,7 +46,7 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public String sendOtp(String userName) throws UpdatePasswordException {
-		// TODO Auto-generated method stub
+
 		if (userName != null) {
 			
 			Optional<RegisterDetails> registerRepo = registerRepository.findByEmailid(userName);
@@ -78,6 +78,7 @@ public class LoginServiceImpl implements LoginService {
 				}
 			}
 			else {
+
 				throw new UpdatePasswordException("Please Enter Register Email or Mobile Number");
 			}
 
@@ -216,7 +217,7 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public void changePassWord(AuthenticationRequest authenticationRequest) throws ChangePasswordException {
-		// TODO Auto-generated method stub
+		
 		Optional<RegisterDetails> registerRepo = registerRepository.findByEmpid(authenticationRequest.getEmpId());
 		
 		if(registerRepo.isPresent() && registerRepo!=null) {

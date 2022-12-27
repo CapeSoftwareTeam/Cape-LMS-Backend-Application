@@ -97,7 +97,7 @@ public class LoginController<UpdatePasswordRequest> {
 
 	@GetMapping("/sendotp/{userName}")
 	public ResponseEntity<List<String>> sendOtp(@PathVariable String userName) throws  UpdatePasswordException {
-		System.out.println("hi");
+		
 		RegisterDetails registerDetails = loginService.emailGet(userName);
 		List<String> listforResponse = new ArrayList<String>();
 		listforResponse.add(loginService.sendOtp(userName));
@@ -118,10 +118,10 @@ public class LoginController<UpdatePasswordRequest> {
 			registerDetails = registerRepo.findByMobilenumber(authenticationRequest.getMobileNumber());
 		}
 
-		if (null != registerDetails && registerDetails.isPresent() && null != registerDetails.get()) {
+		if (null != registerDetails && registerDetails.isPresent() && null != registerDetails.get()&&registerDetails.get().getStatus().equalsIgnoreCase("Active")) {
 
 			try {
-				System.out.println(registerDetails.get().getEmailid());
+			
 				authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 						registerDetails.get().getEmailid(), authenticationRequest.getPassword()));
 				logger.debug("Authentication done sucessfully");

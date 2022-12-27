@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.capeelectric.exception.FileUploadException;
 import com.capeelectric.model.FileUpload;
 import com.capeelectric.model.PublicHolidays;
 import com.capeelectric.service.FileUploadService;
@@ -40,29 +41,36 @@ public class FileUploadController {
 
 	
 
-    @PostMapping("/upload/{fileSize}")
-	public ResponseEntity<Integer> uploadFile(@RequestParam("file") MultipartFile file, @PathVariable String fileSize)
+    @PostMapping("/upload/{fileSize}/{componentName}")
+	public ResponseEntity<Integer> uploadFile(@RequestParam("file") MultipartFile file, @PathVariable String fileSize,@PathVariable String componentName)
 			throws IOException, SerialException, SQLException {
     	
 		logger.debug("File Upload Start");
 
 		logger.debug("File Upload End");
-		return new ResponseEntity<Integer>(fileUploadService.uploadFile(file,fileSize), HttpStatus.OK);
+		return new ResponseEntity<Integer>(fileUploadService.uploadFile(file,fileSize,componentName), HttpStatus.OK);
 	}
-//    @GetMapping("/retrieveFile")
-//  
-//    public List<FileUpload> retrieveFileName( Model map){
-//    	 
-//    	 List<FileUpload> fileUpload = fileUploadService.retrieveFile();
-//    	 map.addAttribute("fileUpload",fileUpload);
-//		return fileUpload;
-//    	
-//    }
-    
+
+    @GetMapping("/retrieveFileName/{componentName}")
+    public ResponseEntity<Map<String,String>> retrieveComponentName(@PathVariable String componentName) throws FileUploadException
+    {
+    	FileUpload fileUpload =  fileUploadService.retrieveFileName(componentName);
+		Map<String, String> hashMap = null ;
+		if (null != fileUpload) {
+			hashMap = new HashMap<String, String>();
+			hashMap.put("fileId", fileUpload.getFileId().toString());
+			hashMap.put("fileType", fileUpload.getFileType());
+			hashMap.put("fileName", fileUpload.getFileName());
+			hashMap.put("fileSize", fileUpload.getFileSize());
+		 
+		}
+		return new ResponseEntity<Map<String, String> >(hashMap, HttpStatus.OK);
+    	
+    }
     	
     
     @GetMapping("/retrieveFile/{fileId}")
-   	public ResponseEntity<Map<String, String>> retrieveFileName(@PathVariable Integer fileId)
+   	public ResponseEntity<Map<String, String>> retrieveFileName(@PathVariable Integer fileId) throws FileUploadException
    			 {
    		
     	FileUpload fileUpload =  fileUploadService.retrieveFileId(fileId);
@@ -78,7 +86,7 @@ public class FileUploadController {
 		return new ResponseEntity<Map<String, String> >(hashMap, HttpStatus.OK);
    	}
     @GetMapping("/downloadFile/{fileId}")
-	public ResponseEntity<String> downloadFile(@PathVariable Integer fileId, HttpServletResponse response) throws IOException, SQLException {
+	public ResponseEntity<String> downloadFile(@PathVariable Integer fileId, HttpServletResponse response) throws IOException, SQLException,FileUploadException {
 		logger.debug("DownloadFile File Start FileId : {}", fileId);
 		
 		FileUpload fileUpload = fileUploadService.downloadFile(fileId);

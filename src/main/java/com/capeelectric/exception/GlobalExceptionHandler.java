@@ -52,5 +52,12 @@ public class GlobalExceptionHandler {
 		ErrorMessage exceptionMessage = new ErrorMessage(e.getMessage(), e.getLocalizedMessage(), "401");
 		return new ResponseEntity<ErrorMessage>(exceptionMessage, new HttpHeaders(), HttpStatus.BAD_REQUEST);
 	}
+	@ExceptionHandler({FileUploadException.class })
+	public ResponseEntity<ErrorMessage> handleFileUploadException(FileUploadException e) {
+		ErrorMessage exceptionMessage = new ErrorMessage(e.getMessage(), e.getLocalizedMessage(), "404");
+		return new ResponseEntity<ErrorMessage>(exceptionMessage, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+	}
+	
+	
 
 }

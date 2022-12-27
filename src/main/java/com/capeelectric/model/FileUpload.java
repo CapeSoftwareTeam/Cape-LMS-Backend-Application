@@ -37,6 +37,9 @@ public class FileUpload implements Serializable{
 	
 	@Column(name = "FILE_SIZE")
 	private String fileSize;
+	
+	@Column(name="COMPONENT_NAME")
+	private String componentName;
 
 	public Integer getFileId() {
 		return fileId;
@@ -85,6 +88,14 @@ public class FileUpload implements Serializable{
 
 	public void setFileSize(String fileSize) {
 		this.fileSize = fileSize;
+	}
+
+	public String getComponentName() {
+		return componentName;
+	}
+
+	public void setComponentName(String componentName) {
+		this.componentName = componentName;
 	}
 
 	
