@@ -2,6 +2,7 @@ package com.capeelectric.controller;
 
 import java.sql.Date;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -38,7 +39,6 @@ public class RegisterControllerTest {
 		register.setEmailid("priyankapalanivel@gmail.com");
 		register.setName("Priyanka");
 		register.setGender("Female");
-		
 		register.setCountry("India");
 		register.setCity("chennai");
 		register.setState("Tamilnadu");
@@ -55,5 +55,10 @@ public class RegisterControllerTest {
 		register.setTotalexperience(1);
 
 	}
-
+@Test
+public void testRegister() {
+	logger.info("RegistrationControllerTest testAddRegistration_funcion Started");
+	
+}
+ 
 }

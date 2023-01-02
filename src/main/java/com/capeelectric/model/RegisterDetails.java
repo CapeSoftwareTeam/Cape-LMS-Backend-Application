@@ -25,7 +25,7 @@ public class RegisterDetails {
 	@Column(name = "NAME")   
 	private String name;
 
-	@Column(name = "DOB") 
+	@Column(name = "DOB")  
 	private Date dob;
 
 	@Column(name = "GENDER")
