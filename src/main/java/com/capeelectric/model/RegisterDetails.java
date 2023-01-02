@@ -22,7 +22,7 @@ public class RegisterDetails {
 	@Column(name = "EMP_ID")
 	private String empid;
 
-	@Column(name = "NAME")
+	@Column(name = "NAME")   
 	private String name;
 
 	@Column(name = "DOB") 
@@ -64,7 +64,7 @@ public class RegisterDetails {
 	@Column(name = "TOTAL_EXPERIENCE")
 	private Integer totalexperience;
 
-	@Column(name="country")
+	@Column(name="COUNTRY")
 	private String  country;
 	
 	@Column(name = "STATE")
@@ -73,6 +73,7 @@ public class RegisterDetails {
 	@Column(name = "CITY")
 	private String city;
 
+	
 	public String getCountry() {
 		return country;
 	}
