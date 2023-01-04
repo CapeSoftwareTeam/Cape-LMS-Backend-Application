@@ -78,12 +78,13 @@ public class LoginServiceImpl implements LoginService {
 				}
 			}
 			else {
-
+                logger.debug("Please Enter Register Email or Mobile Number");
 				throw new UpdatePasswordException("Please Enter Register Email or Mobile Number");
 			}
 
 		}
 		else {
+			logger.error("Invalid Username");
 			throw new UpdatePasswordException("Invalid username");
 		}
 		return null;

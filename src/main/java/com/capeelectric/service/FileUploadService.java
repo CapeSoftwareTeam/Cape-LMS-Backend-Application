@@ -9,6 +9,8 @@ import java.util.Optional;
 import javax.sql.rowset.serial.SerialException;
 
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -21,6 +23,7 @@ import com.capeelectric.repository.FileUploadRepo;
 
 @Service
 public class FileUploadService {
+	private static final Logger logger = LoggerFactory.getLogger(FileUploadService.class);
 	
 	@Autowired
 	private FileUploadRepo fileUploadRepository;
@@ -35,6 +38,7 @@ public class FileUploadService {
 		fileUpload.setStatus("Active");
 		fileUpload.setFileSize(fileSize);
 		fileUpload.setComponentName(componentName);
+		logger.debug("File Upload SuccessFully");
 		return fileUploadRepository.save(fileUpload).getFileId();
 		
 	}
@@ -46,6 +50,7 @@ public class FileUploadService {
 			if (fileData.isPresent() && null !=fileData.get() ) {
 				return fileData.get();
 			}else {
+				logger.debug("Retrive Failed..File Not Present");
 				throw new FileUploadException("File Not Preset");
 		} 
 		}
@@ -59,9 +64,11 @@ public class FileUploadService {
 				if (fileUpload.isPresent() && fileUpload.get()!=null) {
 					return fileUpload.get();
 				} else {
+					logger.debug("Download Failed..File Not Present");
 					throw new IOException("File Not Preset");
 				}
-			} else {			
+			} else {
+				logger.debug("File Id is Not Present");
 				throw new IOException("Id Not Preset");
 			}
 	}
@@ -84,11 +91,11 @@ public class FileUploadService {
 				
 				fileUploadRepository.save(fileUpload.get());
 			} else {
-				
+				logger.debug("FileUpdate Failed..");
 				throw new IOException("File Update failed");
 			}
 		} else {
-			
+			logger.debug("Update Failed..File Not Present");
 			throw new IOException("Id Not Preset");
 		}
 		
@@ -99,7 +106,7 @@ public class FileUploadService {
 			if (fileData.isPresent() && null !=fileData.get() ) {
 				return fileData.get();
 			}else {
-				
+				logger.debug("File Not Preset");
 				throw new FileUploadException("File Not Preset");
 		} 
 		}
