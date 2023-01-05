@@ -28,6 +28,7 @@ public class FileUploadService {
 	@Autowired
 	private FileUploadRepo fileUploadRepository;
 
+//	Uplaod File Service
 	public Integer uploadFile(MultipartFile file, String fileSize,String componentName) throws SerialException, SQLException, IOException {
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 		Blob blob = new javax.sql.rowset.serial.SerialBlob(IOUtils.toByteArray(file.getInputStream()));
@@ -42,7 +43,7 @@ public class FileUploadService {
 		return fileUploadRepository.save(fileUpload).getFileId();
 		
 	}
-
+//  Retrive File Method For FileId Base
 	public FileUpload retrieveFileId(Integer fileId) throws FileUploadException{
 		
 		if (fileId != null && fileId != 0) {
@@ -57,7 +58,7 @@ public class FileUploadService {
 		return null;
 		
 	}
-
+//  Download File Method Service
 	public FileUpload downloadFile(Integer fileId) throws IOException {
 		if (fileId != null && fileId != 0) {
 			Optional<FileUpload> fileUpload = fileUploadRepository.findById(fileId);
@@ -74,7 +75,7 @@ public class FileUploadService {
 	}
 
 	
-
+// Update File Method Service
 	public void updateFile(MultipartFile file, Integer fileId, String fileSize) throws IOException, SerialException, SQLException {
 		
 		if (fileId != null && fileId != 0) {
@@ -85,10 +86,7 @@ public class FileUploadService {
 				fileUpload.get().setFileName(fileName);
 				fileUpload.get().setData(blob);
 				fileUpload.get().setFileType(file.getContentType());
-				
-				
 				fileUpload.get().setFileSize(fileSize);
-				
 				fileUploadRepository.save(fileUpload.get());
 			} else {
 				logger.debug("FileUpdate Failed..");
@@ -100,6 +98,8 @@ public class FileUploadService {
 		}
 		
 	}
+	
+//	Retrive File For componentName Base
 	public FileUpload retrieveFileName(String componentName) throws FileUploadException {
 		if (componentName != null) {
 			Optional<FileUpload> fileData = fileUploadRepository.findByComponentName(componentName);

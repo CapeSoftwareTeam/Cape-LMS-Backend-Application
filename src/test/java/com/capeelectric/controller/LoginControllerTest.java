@@ -37,7 +37,7 @@ import com.capeelectric.serviceImpl.RegistrationDetailsServiceImpl;
 public class LoginControllerTest {
 	
 	@InjectMocks
-	private LoginController<?> loginController;
+	private LoginController loginController;
 	
 	@MockBean
 	private RegistrationDetailsServiceImpl registrationDetailsServiceImpl;
@@ -100,7 +100,6 @@ public class LoginControllerTest {
 		authenticationRequest.setPassword("Cape@1234");
 		when(registrationRepository.findByEmailid(authenticationRequest.getEmail())).thenReturn(Optional.of(registerDetails));
 		ResponseEntity<String> updatePassword=loginController.updatePassword(authenticationRequest);
-		System.out.println(updatePassword.getBody());
 		assertEquals(updatePassword.getBody(),"Password  Updated!");
 		
 		
@@ -114,7 +113,7 @@ public class LoginControllerTest {
 		authenticationRequest.setPassword("Cape1234");
 		when(registrationRepository.findByEmpid(authenticationRequest.getEmpId())).thenReturn(Optional.of(registerDetails));
 		ResponseEntity<String> changePassword=loginController.changePassword(authenticationRequest);
-		assertEquals(changePassword.getBody(),"Password  Updated!");
+		assertEquals(changePassword.getBody(),"New PassWord Updated Successfully!");
 	}
 
 }

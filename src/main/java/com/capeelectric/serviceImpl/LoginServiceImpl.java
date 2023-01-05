@@ -44,6 +44,7 @@ public class LoginServiceImpl implements LoginService {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
+//	Send Otp Service Implementation
 	@Override
 	public String sendOtp(String userName) throws UpdatePasswordException {
 
@@ -54,7 +55,7 @@ public class LoginServiceImpl implements LoginService {
 			
 
 			if (registerRepo.isPresent() && registerRepo.get().getEmailid() != null) {
-				
+				logger.debug("user enter Email for Send Otp"+registerRepo);
 				String mobileNumber = registerRepo.get().getMobilenumber();
 				boolean isValidMobileNumber = isValidMobileNumber(mobileNumber);
 				if (isValidMobileNumber) {
@@ -66,7 +67,7 @@ public class LoginServiceImpl implements LoginService {
 //					return otpSend(mobileNumber);
 				}
 			} else if(registerRepoNumber.isPresent() && registerRepoNumber.get().getEmailid() != null) {
-				
+				logger.debug("User Enter Mobile For Send Otp"+registerRepoNumber);
 				if (registerRepoNumber.get().getMobilenumber().equals(userName)) {
 					boolean isValidMobileNumber = isValidMobileNumber(userName);
 					if (isValidMobileNumber) {
@@ -90,14 +91,14 @@ public class LoginServiceImpl implements LoginService {
 		return null;
 
 	}
-
+//Mobile Number Pattern Validation
 	private boolean isValidMobileNumber(String mobileNumber) {
 		Pattern p = Pattern
 				.compile("^(\\+\\d{1,3}( )?)?(\\s*[\\-]\\s*)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$");
 		Matcher m = p.matcher(mobileNumber);
 		return (m.find() && m.group().equals(mobileNumber));
 	}
-
+//Otp send Method
 	public String otpSend(String mobileNumber) {
 		try {
 			ResponseEntity<String> sendOtpResponse = restTemplate.exchange(otpConfig.getSendOtp() + mobileNumber,
@@ -111,18 +112,20 @@ public class LoginServiceImpl implements LoginService {
 
 	}
 
+//	Update PassWord Method for ForgetPassword
 	@Override
 	public void updatePassword(AuthenticationRequest authenticationRequest) {
 		Optional<RegisterDetails> registerRepo = registerRepository.findByEmailid(authenticationRequest.getEmail());
 		if (registerRepo.isPresent() && registerRepo.get().getEmailid() != null) {
 			RegisterDetails registerDetails = registerRepo.get();
 			registerDetails.setPassword(passwordEncoder.encode(authenticationRequest.getPassword()));
+			logger.debug("Password Update Successfully");
 			registerRepository.save(registerDetails);
 
 		}
 
 	}
-
+//Forget PassWord Email and MobileNumber Validation
 	@Override
 	public RegisterDetails emailGet(String userName) throws UpdatePasswordException{
 		
@@ -131,7 +134,7 @@ public class LoginServiceImpl implements LoginService {
 		if(userName!=null) {
 		
 		if(userName!=null && userName.contains("@")) {
-			
+			logger.debug("User Enter Email For Update Password"+userName);
 			
 			if(register.isPresent()) {
 				
@@ -139,29 +142,32 @@ public class LoginServiceImpl implements LoginService {
 				
 				return registerDetails;
 			}else {
+				logger.debug("Please Enter Registred Email");
 				throw new UpdatePasswordException("Please Enter Registred Email");
 			}
 		
 		}
 		else {
-			
+			logger.debug("User Enter MobileNumber For Update Password"+userName);
 			if(registerRepo.isPresent()) {
 				RegisterDetails registerDetails = registerRepo.get();
 				return registerDetails;
 			}
 			else {
+				logger.debug("Please Enter Register MobileNumber");
 				throw new UpdatePasswordException("Please Enter Registerd MobileNumber");
 			}
 		
 //			registerRepository.save(registerDetails);
 		}
 		}
+		logger.debug("Please fill Email or Mobile number to proceed further!");
 		throw new UpdatePasswordException("Please fill Email or Mobile number to proceed further!");
 		
 	}
-
+//Verify Otp Method
 	@Override
-	public RegisterDetails VerifyOtp(AuthenticationRequest authenticationRequest) throws UpdatePasswordException {
+	public RegisterDetails verifyOtp(AuthenticationRequest authenticationRequest) throws UpdatePasswordException {
 		
 		if (authenticationRequest.getEmail() != null) {
 			RegisterDetails register = registerRepository.findByEmailid(authenticationRequest.getEmail()).get();
@@ -176,17 +182,18 @@ public class LoginServiceImpl implements LoginService {
 					logger.debug(" Otp Verified failed");
 				}
 				}else {
-					
+					logger.debug("User Not Available");
 					throw new UpdatePasswordException("User Not available");
 				}
 			}else {
-				
+				logger.debug("UserName  Not Valid");
 				throw new UsernameNotFoundException("Username not valid");
 			}
 		
 		return null;
 	}
 
+// User Enter Otp Verifyication
 	private boolean verifyOtpMethod(AuthenticationRequest authenticationRequest) throws UpdatePasswordException {
 		boolean success = false;
 		
@@ -216,6 +223,7 @@ public class LoginServiceImpl implements LoginService {
 		
 	}
 
+//	Change PassWord Service Method
 	@Override
 	public void changePassWord(AuthenticationRequest authenticationRequest) throws ChangePasswordException {
 		
@@ -229,11 +237,12 @@ public class LoginServiceImpl implements LoginService {
 				registerDetails.setPassword(passwordEncoder.encode(authenticationRequest.getPassword()));
 				registerRepository.save(registerDetails);
 			}else {
+				logger.debug("Enter Valid Old Password"+authenticationRequest.getOldPassword());
 				throw new ChangePasswordException("Please Enter Valid Old Password");
 			}
 		}
 		else {
-			
+			logger.debug("Invalid Inputs");
 			throw new ChangePasswordException("Invalid Inputs");
 		}
 	}

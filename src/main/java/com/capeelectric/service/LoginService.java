@@ -14,7 +14,7 @@ public interface LoginService {
 
 	public RegisterDetails emailGet(String userName) throws UpdatePasswordException;
 
-	public RegisterDetails VerifyOtp(AuthenticationRequest authenticationRequest) throws UpdatePasswordException;
+	public RegisterDetails verifyOtp(AuthenticationRequest authenticationRequest) throws UpdatePasswordException;
 
 	public void changePassWord(AuthenticationRequest authenticationRequest) throws ChangePasswordException;
 
