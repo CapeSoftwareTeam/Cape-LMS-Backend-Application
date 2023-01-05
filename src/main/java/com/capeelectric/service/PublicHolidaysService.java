@@ -12,10 +12,10 @@ public interface PublicHolidaysService {
 
 	public String addPublicHolidays(List<PublicHolidays> publicHoliday) ;
 
-	void updatePublicHolidays(List<PublicHolidays> publicHolidays);
+	public void updatePublicHolidays(List<PublicHolidays> publicHolidays);
 
-	List<PublicHolidays> getPublicHolidays();
+	public List<PublicHolidays> getPublicHolidays();
 
-	void deletePublicHolidays(Integer publicLeaveId);
+	public void deletePublicHolidays(Integer publicLeaveId);
 
 }
