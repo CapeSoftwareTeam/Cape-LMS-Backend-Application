@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.capeelectric.exception.UserException;
 import com.capeelectric.model.RegisterDetails;
 import com.capeelectric.service.RegisterService;
 
@@ -32,7 +33,7 @@ import com.capeelectric.service.RegisterService;
 	private RegisterService registerService;
 	 
 	@PostMapping("/addRegister")
-	public ResponseEntity<String> addRegisterDetails(@RequestBody RegisterDetails registerDetails) throws Exception {
+	public ResponseEntity<String> addRegisterDetails(@RequestBody RegisterDetails registerDetails) throws Exception,UserException {
 		registerService.addRegisterDetails(registerDetails);
 		return new ResponseEntity<String>("Employee Registred Successfully", HttpStatus.OK);
 	}	

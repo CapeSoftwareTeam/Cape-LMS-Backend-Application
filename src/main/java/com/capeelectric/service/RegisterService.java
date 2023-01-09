@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.capeelectric.exception.UserException;
 import com.capeelectric.model.RegisterDetails;
 
 /**
@@ -16,7 +17,7 @@ import com.capeelectric.model.RegisterDetails;
 @Service
 public interface RegisterService {
 
-	public void addRegisterDetails(RegisterDetails registerDetails) throws Exception;
+	public void addRegisterDetails(RegisterDetails registerDetails) throws Exception,UserException;
 
 	public void updateRegisterDetails(RegisterDetails registerDetails);
 

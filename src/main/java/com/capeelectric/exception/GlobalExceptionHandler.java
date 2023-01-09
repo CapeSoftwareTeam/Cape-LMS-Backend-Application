@@ -13,7 +13,7 @@ import com.capeelectric.util.ErrorMessage;
 public class GlobalExceptionHandler {
 	@ExceptionHandler({ UserException.class })
 	public ResponseEntity<ErrorMessage> handleUserException(UserException e) {
-		ErrorMessage exceptionMessage = new ErrorMessage(e.getMessage(), e.getLocalizedMessage(), "404");
+		ErrorMessage exceptionMessage = new ErrorMessage(e.getMessage(), e.getLocalizedMessage(), "402");
 		return new ResponseEntity<ErrorMessage>(exceptionMessage, new HttpHeaders(), HttpStatus.NOT_FOUND);
 	}
 

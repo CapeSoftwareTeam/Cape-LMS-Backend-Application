@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.capeelectric.config.AWSConfig;
+import com.capeelectric.exception.UserException;
 import com.capeelectric.model.EmailContent;
 import com.capeelectric.model.RegisterDetails;
 import com.capeelectric.repository.RegisterRepo;
@@ -51,11 +52,16 @@ public class RegisterServiceImpl implements RegisterService {
 	private BCryptPasswordEncoder passwordEncoder;
 
 	@Override
-	public void addRegisterDetails(RegisterDetails registerDetails) throws Exception {
+	public void addRegisterDetails(RegisterDetails registerDetails) throws Exception,UserException {
+		
 
 		if (null != registerDetails && null != registerDetails.getEmpid()) {
 			Optional<RegisterDetails> register = registerRepo.findByEmpid(registerDetails.getEmpid());
-			if (!register.isPresent()) {
+			Optional<RegisterDetails> register1 =registerRepo.findByEmailid(registerDetails.getEmailid());
+			Optional<RegisterDetails> register2=registerRepo.findByMobilenumber(registerDetails.getMobilenumber());
+			Optional<RegisterDetails> register3=registerRepo.findByAlternatenumber(registerDetails.getAlternatenumber());
+			if (!register.isPresent() && !register1.isPresent() && !register2.isPresent() && !register3.isPresent()) {
+				System.out.println("its allowed");
 				String password = registerDetails.getPassword();
 				registerDetails.setPassword(passwordEncoder.encode(registerDetails.getPassword()));
 				registerDetails.setStatus("Active");
@@ -64,21 +70,34 @@ public class RegisterServiceImpl implements RegisterService {
 				registerDetails.setCreatedby("HR");
 
 				registerRepo.save(registerDetails);
-				sendEmail(registerDetails.getEmailid(), "We welcome to cape electric private Limited family.\r\n"
-						+ "\r\n"
-						+ "You have been successfully registered for the Leave Management systems in Cape electric private limited.\r\n"
-						+ "\r\n"
-						+ "This application will help you in applying and managing your leave in cape electric. Kindly note your login and one time password below.\r\n"
-						+ "\r\n" + "Login:" + registerDetails.getEmailid() + "\r\n" + "Password:" + password + "\r\n"
-						+ "\r\n" + "You can change the password using this link " + webUrl + "\r\n" + "\r\n"
-						+ "Any Clarification, Please contact \"-----hr mail id-----\"\r\n" + "\r\n" + "Best Wishes\r\n"
-						+ "Admin,\r\n" + "cape electric Pvt Ltd,\r\n" + "Oragadam.");
+//				sendEmail(registerDetails.getEmailid(), "We welcome to cape electric private Limited family.\r\n"
+//						+ "\r\n"
+//						+ "You have been successfully registered for the Leave Management systems in Cape electric private limited.\r\n"
+//						+ "\r\n"
+//						+ "This application will help you in applying and managing your leave in cape electric. Kindly note your login and one time password below.\r\n"
+//						+ "\r\n" + "Login:" + registerDetails.getEmailid() + "\r\n" + "Password:" + password + "\r\n"
+//						+ "\r\n" + "You can change the password using this link " + webUrl + "\r\n" + "\r\n"
+//						+ "Any Clarification, Please contact \"-----hr mail id-----\"\r\n" + "\r\n" + "Best Wishes\r\n"
+//						+ "Admin,\r\n" + "cape electric Pvt Ltd,\r\n" + "Oragadam.");
+//				System.out.println("hi");
 			} else {
-				throw new Exception("Employee Data Already exist");
+				if(register.isPresent()&&!register1.isPresent()&&!register2.isPresent()&&register3.isPresent()) {
+					throw new UserException("Employee Id Already Exist");
+				}
+				else if(!register.isPresent()&&register1.isPresent()&&!register2.isPresent()&&register3.isPresent()) {
+					throw new UserException("Email Id Already Exist");
+				}
+				else if(!register.isPresent()&&!register1.isPresent()&&register2.isPresent()&&register3.isPresent()) {
+					throw new UserException("Moblie Number Already Exist");
+				}
+				else {
+					throw new UserException("Alternate Moblie Number Already Exist");
+				}
+				
 			}
 
 		} else {
-			throw new Exception("Invalid input");
+			throw new UserException("Invalid input");
 		}
 
 	}
@@ -109,22 +128,38 @@ public class RegisterServiceImpl implements RegisterService {
 		}
 	}
 
-	public void sendEmail(String email, String content) throws URISyntaxException {
-
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		URI uri = new URI(awsConfiguration.getSendLmsEmail() + email);
-		EmailContent emailContent = new EmailContent();
-		emailContent.setContentDetails(content);
-		RequestEntity<EmailContent> requestEntity = new RequestEntity<>(emailContent, headers, HttpMethod.PUT, uri);
-		ParameterizedTypeReference<EmailContent> typeRef = new ParameterizedTypeReference<EmailContent>() {
-		};
-
-		// ResponseEntity<EmailContent> exchange = restTemplate.exchange(requestEntity,
-		// typeRef);
-//		System.out.println(exchange);
-
-	}
+//	@Override
+//	public void sendEmail(String email,String ccEmail, String content) throws Exception {
+//
+//		try {
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.setContentType(MediaType.APPLICATION_JSON);
+//		URI uri = new URI(awsConfiguration.getSendLmsEmail() + email +"/"+ccEmail);
+//		EmailContent emailContent = new EmailContent();
+//		emailContent.setContentDetails(content);
+//		RequestEntity<EmailContent> requestEntity = new RequestEntity<>(emailContent, headers, HttpMethod.PUT, uri);
+//		ParameterizedTypeReference<EmailContent> typeRef = new ParameterizedTypeReference<EmailContent>() {
+//		};
+//		ResponseEntity<EmailContent> exchange = restTemplate.exchange(requestEntity, typeRef);
+//		}
+//		catch(Exception e) {
+//			throw new Exception("Mail sent failed");
+//		}
+//	}
+//	
+//	@Override
+//	public void sendEmail(String email, String content) throws URISyntaxException {
+//		
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.setContentType(MediaType.APPLICATION_JSON);
+//		URI uri = new URI(awsConfiguration.getSendLmsEmail() + email);
+//		EmailContent emailContent = new EmailContent();
+//		emailContent.setContentDetails(content);
+//		RequestEntity<EmailContent> requestEntity = new RequestEntity<>(emailContent, headers, HttpMethod.PUT, uri);
+//		ParameterizedTypeReference<EmailContent> typeRef = new ParameterizedTypeReference<EmailContent>() {
+//		};
+//		ResponseEntity<EmailContent> exchange = restTemplate.exchange(requestEntity, typeRef);
+//	}
 
 	@Override
 	public List<RegisterDetails> getEmpidDetails() {
