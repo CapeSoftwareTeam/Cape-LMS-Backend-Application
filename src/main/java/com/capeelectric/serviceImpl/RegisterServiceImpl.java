@@ -29,6 +29,8 @@ import com.capeelectric.model.RegisterDetails;
 import com.capeelectric.repository.RegisterRepo;
 import com.capeelectric.service.RegisterService;
 
+import ch.qos.logback.classic.Logger;
+
 /**
  * @author Priyanka
  *
@@ -56,12 +58,12 @@ public class RegisterServiceImpl implements RegisterService {
 		
 
 		if (null != registerDetails && null != registerDetails.getEmpid()) {
+			
 			Optional<RegisterDetails> register = registerRepo.findByEmpid(registerDetails.getEmpid());
 			Optional<RegisterDetails> register1 =registerRepo.findByEmailid(registerDetails.getEmailid());
 			Optional<RegisterDetails> register2=registerRepo.findByMobilenumber(registerDetails.getMobilenumber());
-			Optional<RegisterDetails> register3=registerRepo.findByAlternatenumber(registerDetails.getAlternatenumber());
-			if (!register.isPresent() && !register1.isPresent() && !register2.isPresent() && !register3.isPresent()) {
-				System.out.println("its allowed");
+			
+			if (!register.isPresent() && !register1.isPresent() && !register2.isPresent()) {
 				String password = registerDetails.getPassword();
 				registerDetails.setPassword(passwordEncoder.encode(registerDetails.getPassword()));
 				registerDetails.setStatus("Active");
@@ -81,17 +83,26 @@ public class RegisterServiceImpl implements RegisterService {
 //						+ "Admin,\r\n" + "cape electric Pvt Ltd,\r\n" + "Oragadam.");
 //				System.out.println("hi");
 			} else {
-				if(register.isPresent()&&!register1.isPresent()&&!register2.isPresent()&&register3.isPresent()) {
+				if(register.isPresent()&&!register1.isPresent()&&!register2.isPresent()) {	
 					throw new UserException("Employee Id Already Exist");
 				}
-				else if(!register.isPresent()&&register1.isPresent()&&!register2.isPresent()&&register3.isPresent()) {
+				else if(!register.isPresent()&&register1.isPresent()&&!register2.isPresent()) {
 					throw new UserException("Email Id Already Exist");
 				}
-				else if(!register.isPresent()&&!register1.isPresent()&&register2.isPresent()&&register3.isPresent()) {
+				else if(!register.isPresent()&&!register1.isPresent()&&register2.isPresent()) {
 					throw new UserException("Moblie Number Already Exist");
 				}
+				else if(register.isPresent()&&register1.isPresent()&&!register2.isPresent()) {
+					throw new UserException("EmpId and Email Already Exist");
+				}
+				else if(!register.isPresent()&&register1.isPresent()&&register2.isPresent()){
+					throw new UserException("Email and Mobile Number Already Exist");
+				}
+				else if(register.isPresent()&&!register1.isPresent()&&register2.isPresent()) {
+					throw new UserException("EmpId and Mobile Number Alread Exist");
+				}
 				else {
-					throw new UserException("Alternate Moblie Number Already Exist");
+					throw new UserException("EmpId ,Email and Mobile Number Already Exist");
 				}
 				
 			}
