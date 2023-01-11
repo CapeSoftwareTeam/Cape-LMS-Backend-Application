@@ -246,6 +246,14 @@ public class LoginServiceImpl implements LoginService {
 			throw new ChangePasswordException("Invalid Inputs");
 		}
 	}
+	@Override
+	public String sentOTP(String mobileNumber) {
+		if(mobileNumber!=null) {
+			return otpSend(mobileNumber);
+		}
+		return null;
+		
+	}
 
 
 

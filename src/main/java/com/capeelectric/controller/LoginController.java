@@ -117,6 +117,14 @@ public class LoginController{
 		return new ResponseEntity<List<String>>(listforResponse, HttpStatus.OK);
 	}
 
+// sendOTP for change Number
+	@GetMapping("/sendOTP/{mobileNumber}")
+	public ResponseEntity<String> sentOTP(@PathVariable String mobileNumber){
+		String OtpSession=loginService.sentOTP(mobileNumber);
+		return  new ResponseEntity<String>(OtpSession,HttpStatus.OK);
+		
+	}
+	
 //	Login Credential Authenticate Method
 	private String authenticate(AuthenticationRequest authenticationRequest) throws AuthenticationException {
 

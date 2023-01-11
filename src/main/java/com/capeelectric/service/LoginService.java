@@ -18,6 +18,8 @@ public interface LoginService {
 
 	public void changePassWord(AuthenticationRequest authenticationRequest) throws ChangePasswordException;
 
+	public String sentOTP(String mobileNumber);
+
 	
 
 
