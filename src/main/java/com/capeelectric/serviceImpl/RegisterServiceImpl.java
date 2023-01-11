@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -39,7 +40,8 @@ import ch.qos.logback.classic.Logger;
  **/
 @Service
 public class RegisterServiceImpl implements RegisterService {
-
+	
+	private static final Logger logger = (Logger) LoggerFactory.getLogger(LoginServiceImpl.class);
 	@Autowired
 	private RegisterRepo registerRepo;
 
@@ -63,12 +65,13 @@ public class RegisterServiceImpl implements RegisterService {
 		
 
 		if (null != registerDetails && null != registerDetails.getEmpid()) {
-			
+			logger.debug("getting empid,email,mobile number"+registerRepo);
 			Optional<RegisterDetails> register = registerRepo.findByEmpid(registerDetails.getEmpid());
 			Optional<RegisterDetails> register1 =registerRepo.findByEmailid(registerDetails.getEmailid());
 			Optional<RegisterDetails> register2=registerRepo.findByMobilenumber(registerDetails.getMobilenumber());
 			
 			if (!register.isPresent() && !register1.isPresent() && !register2.isPresent()) {
+				logger.debug("checking the empid is present or not"+registerRepo);
 				String password = registerDetails.getPassword();
 				registerDetails.setPassword(passwordEncoder.encode(registerDetails.getPassword()));
 				registerDetails.setStatus("Active");
@@ -89,15 +92,19 @@ public class RegisterServiceImpl implements RegisterService {
 //				System.out.println("hi");
 			} else {
 				if(register.isPresent()&&!register1.isPresent()&&!register2.isPresent()) {	
+					logger.debug("user type same empid"+registerRepo);
 					throw new UserException("Employee Id Already Exist");
 				}
 				else if(!register.isPresent()&&register1.isPresent()&&!register2.isPresent()) {
+					logger.debug("user type same email"+registerRepo);
 					throw new UserException("Email Id Already Exist");
 				}
 				else if(!register.isPresent()&&!register1.isPresent()&&register2.isPresent()) {
+					logger.debug("user type same mobile number"+registerRepo);
 					throw new UserException("Moblie Number Already Exist");
 				}
 				else if(register.isPresent()&&register1.isPresent()&&!register2.isPresent()) {
+					logger.debug("user type same emp id & email"+registerRepo);
 					throw new UserException("EmpId and Email Already Exist");
 				}
 				else if(!register.isPresent()&&register1.isPresent()&&register2.isPresent()){
