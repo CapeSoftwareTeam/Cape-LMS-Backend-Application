@@ -26,6 +26,8 @@ import com.capeelectric.config.AWSConfig;
 import com.capeelectric.exception.UserException;
 import com.capeelectric.model.EmailContent;
 import com.capeelectric.model.RegisterDetails;
+import com.capeelectric.model.city;
+import com.capeelectric.repository.CityRepository;
 import com.capeelectric.repository.RegisterRepo;
 import com.capeelectric.service.RegisterService;
 
@@ -52,6 +54,9 @@ public class RegisterServiceImpl implements RegisterService {
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private CityRepository cityrepo;
 
 	@Override
 	public void addRegisterDetails(RegisterDetails registerDetails) throws Exception,UserException {
@@ -188,6 +193,21 @@ public class RegisterServiceImpl implements RegisterService {
 
 		}
 
+	}
+
+	@Override
+	public List<city> getCity() {
+		
+		
+		return (List<city>) cityrepo.findAll()  ;
+	}
+
+	@Override
+	public void addCity(city cityDetails) {
+		
+		cityrepo.save(cityDetails);
+		// TODO Auto-generated method stub
+		
 	}
 
 //	@Override

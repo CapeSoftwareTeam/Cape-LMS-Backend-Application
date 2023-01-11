@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.capeelectric.exception.UserException;
 import com.capeelectric.model.RegisterDetails;
+import com.capeelectric.model.city;
 
 /**
  * @author Priyanka
@@ -28,6 +29,12 @@ public interface RegisterService {
 	public List<RegisterDetails> getEmpidDetails();
 
 	public void updateRegister(String mobileNumber, String empid);
+
+	public List<city> getCity();
+
+	public void addCity(city cityDetails);
+	
+	
 
 //	public void getMaxEmpId();
 

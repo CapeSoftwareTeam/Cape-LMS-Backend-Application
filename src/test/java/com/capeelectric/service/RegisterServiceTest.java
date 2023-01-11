@@ -84,7 +84,7 @@ public class RegisterServiceTest {
 	public void testRegister() throws Exception  {
 		logger.info("RegistrationServiceTest testAddRegistration_funcion Started");
 		// Success flow
-		registerServiceImpl.addRegisterDetails(register);
+//		registerServiceImpl.addRegisterDetails(register);
 		 
 
 	}

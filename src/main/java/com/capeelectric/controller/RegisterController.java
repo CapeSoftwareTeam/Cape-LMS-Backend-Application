@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.capeelectric.exception.CountryDetailsException;
 import com.capeelectric.exception.UserException;
+import com.capeelectric.model.Country;
 import com.capeelectric.model.RegisterDetails;
+import com.capeelectric.model.city;
 import com.capeelectric.service.RegisterService;
 
 /**
@@ -73,6 +76,18 @@ import com.capeelectric.service.RegisterService;
    List<RegisterDetails> registerDetails = registerService.getEmpidDetails();
   	return new ResponseEntity<List<RegisterDetails> >(registerDetails,HttpStatus.OK);
   }
+ @GetMapping("/getcity")
+ public ResponseEntity<List<city>> getCity(){
+	 List<city> cityDetails = registerService.getCity();
+	 return new ResponseEntity<List<city>>(cityDetails,HttpStatus.OK);
+
+  }
+ @PostMapping("/addcity")
+	public ResponseEntity<String> addCity(@RequestBody city cityDetails) throws Exception,UserException {
+		registerService.addCity(cityDetails);
+		return new ResponseEntity< String>("city add successfully",HttpStatus.OK);
+	}	
+   
     
   
 	

@@ -11,15 +11,23 @@ public class city {
 
 	
 	@Id
-	@Column(name="CITY_ID")
-	private Integer cityid;
+	@Column(name=" CITY_NAME")
+	private Integer cityname;
+	@Column(name=" CITY_ID")
+	private String cityid;
 	
-	@Column(name="STATE_ID")
-	private Integer stateid;
+	public Integer getCityname() {
+		return cityname;
+	}
+	public void setCityname(Integer cityname) {
+		this.cityname = cityname;
+	}
+	public String getCityid() {
+		return cityid;
+	}
+	public void setCityid(String cityid) {
+		this.cityid = cityid;
+	}
 	
-	@Column(name="NAME")
-	private String name;
 	
-	@Column(name="CODE")
-	private Integer code;
 }
