@@ -63,7 +63,7 @@ public class RegisterServiceImpl implements RegisterService {
 	@Override
 	public void addRegisterDetails(RegisterDetails registerDetails) throws Exception,UserException {
 		
-
+//checking null , empid,email,mobile is presenting on db  properly or not and duplicates
 		if (null != registerDetails && null != registerDetails.getEmpid()) {
 			logger.debug("getting empid,email,mobile number"+registerRepo);
 			Optional<RegisterDetails> register = registerRepo.findByEmpid(registerDetails.getEmpid());
@@ -124,7 +124,7 @@ public class RegisterServiceImpl implements RegisterService {
 		}
 
 	}
-
+//register details updated current time and updated by whom
 	@Override
 	public void updateRegisterDetails(RegisterDetails registerDetails) {
 		registerDetails.setUpdateddate(LocalDateTime.now());
@@ -140,7 +140,7 @@ public class RegisterServiceImpl implements RegisterService {
 		// TODO Auto-generated method stub
 		return registerRepo.findByEmpid(empid).get();
 	}
-
+//Status inactive and active 
 	@Override
 	public void deleteRegisterDetails(String empid) {
 		Optional<RegisterDetails> register = registerRepo.findByEmpid(empid);
@@ -201,6 +201,7 @@ public class RegisterServiceImpl implements RegisterService {
 		}
 
 	}
+//	taking list of city
 
 	@Override
 	public List<city> getCity() {
