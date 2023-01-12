@@ -42,6 +42,7 @@ import ch.qos.logback.classic.Logger;
 public class RegisterServiceImpl implements RegisterService {
 	
 	private static final Logger logger = (Logger) LoggerFactory.getLogger(LoginServiceImpl.class);
+
 	@Autowired
 	private RegisterRepo registerRepo;
 
@@ -195,9 +196,10 @@ public class RegisterServiceImpl implements RegisterService {
 		Optional<RegisterDetails> register = registerRepo.findByEmpid(empid);
 		if (register.isPresent()) {
 			register.get().setMobilenumber(mobileNumber);
+			register.get().setMobileNumUpdatedDate(LocalDateTime.now().plusMonths(1));
 			registerRepo.save(register.get());
 		} else {
-
+          
 		}
 
 	}

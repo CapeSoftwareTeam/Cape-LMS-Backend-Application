@@ -58,8 +58,9 @@ import com.capeelectric.service.RegisterService;
 		return new ResponseEntity<String>("Employee Updated Successfully", HttpStatus.OK);
 	}
 	
+
 //	Update mobile number
-	@PutMapping("/updateRegister/{mobileNumber}/{empid}")
+	@PutMapping("/updateRegisterMobileNumber/{mobileNumber}/{empid}")
 	public ResponseEntity<String> updateRegister(@PathVariable String mobileNumber,@PathVariable String empid) {
 		registerService.updateRegister(mobileNumber,empid);
 		logger.debug("mobile number is updated");

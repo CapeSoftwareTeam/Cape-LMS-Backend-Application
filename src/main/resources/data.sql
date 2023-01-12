@@ -28,6 +28,7 @@ create table register_table(
                 CREATED_BY VARCHAR(300),
                 UPDATED_DATE DATE,
                 UPDATED_BY VARCHAR(300),
+                MOBILE_NUM_UPDATED_DATE DATE,
                 MANAGER_NAME VARCHAR(100),
                 MANAGER_EMAIL VARCHAR(100),
                 STATUS VARCHAR(300),

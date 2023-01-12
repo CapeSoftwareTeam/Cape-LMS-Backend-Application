@@ -73,15 +73,6 @@ public class RegisterDetails {
 	@Column(name = "CITY")
 	private String city;
 
-	
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
 	@Column(name = "MANAGER_NAME")
 	private String managername;
 
@@ -99,9 +90,29 @@ public class RegisterDetails {
 
 	@Column(name = "UPDATED_BY")
 	private String updatedby;
+	
+	@Column(name = "MOBILE_NUM_UPDATED_DATE")
+	private LocalDateTime mobileNumUpdatedDate;
 
 	@Column(name = "STATUS")
 	private String status;
+	
+	
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public LocalDateTime getMobileNumUpdatedDate() {
+		return mobileNumUpdatedDate;
+	}
+
+	public void setMobileNumUpdatedDate(LocalDateTime mobileNumUpdatedDate) {
+		this.mobileNumUpdatedDate = mobileNumUpdatedDate;
+	}
 
 	public Integer getRegisterid() {
 		return registerid;
